@@ -140,6 +140,6 @@ export const AppProvider = ({ children }) => {
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
-export default function AppState() {
+export function AppState() {
   useContext(Context);
 }
