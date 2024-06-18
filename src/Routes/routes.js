@@ -6,6 +6,7 @@ import VisaHealth from "../Pages/Travel Guide/Visa-Health/VisaHealth";
 import GeneralInformation from "../Pages/Travel Guide/General Information/GeneralInformation";
 import AboutUs from "../Pages/Contact/AboutUs/AboutUs";
 import BookingForm from "../Pages/Contact/Booking Form/BookingForm";
+import AuthPage from "../Pages/Authentication/AuthPage";
 
 export const AppRoutes = [
   {
@@ -18,7 +19,7 @@ export const AppRoutes = [
     element: <Home />,
   },
   {
-    path: "/Our-tours",
+    path: "/our-tours",
     element: <Tours />,
   },
   {
@@ -45,4 +46,8 @@ export const AppRoutes = [
     path: "/booking-form",
     element: <BookingForm />,
   },
+  {
+    path: "/sign-in",
+    element: <AuthPage />
+  }
 ];

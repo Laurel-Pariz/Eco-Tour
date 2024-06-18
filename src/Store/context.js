@@ -1,14 +1,11 @@
 import React, { useReducer, useEffect, useContext } from "react";
 import {
-  EmailAuthProvider,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  updateEmail,
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../Configs/firebase";
-import { type } from "@testing-library/user-event/dist/type";
 
 export const CONSTANTS = {
   SIGN_UP: "SIGN_UP",
@@ -140,6 +137,4 @@ export const AppProvider = ({ children }) => {
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
-export function AppState() {
-  useContext(Context);
-}
+export const AppState = () => useContext(Context);
