@@ -35,13 +35,13 @@ export default function AuthPage() {
 
   const handleUserSignUp = async (values, actions) => {
     try {
-      await signUpHandler(
+      signUpHandler(
         values.email,
         values.password,
         values.firstName,
         values.lastName
       );
-      redirect("/home");
+      alert("Success!!");
       actions.resetForm({
         values: {
           firstName: "",

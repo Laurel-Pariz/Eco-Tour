@@ -12,6 +12,7 @@ export const CONSTANTS = {
   SIGN_IN: "SIGN_IN",
   SIGN_OUT: "SIGN_OUT",
   ERROR: "ERROR",
+  SET_USER: "SET_USER",
 };
 
 export const Context = React.createContext();
@@ -42,6 +43,12 @@ export const AppReducer = (state, action) => {
       return {
         ...state,
         error: action.payload.error,
+      };
+
+    case CONSTANTS.SET_USER:
+      return {
+        ...state,
+        user: action.payload.user,
       };
 
     default:
