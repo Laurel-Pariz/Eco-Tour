@@ -61,12 +61,12 @@ export const discoverCameroon = [
     text: "Named in the memory of Cameroonian artists Daniel and his son John Musa, this heritage gallery preserves works of the artists and then spread further to cover the arts and crafts of Cameroons westernsGrass fields. Over 400 diverse and varied objects are collected and preserved in the museum.",
   },
 
-  /* {
+  {
     image:
-      "https://www.cameroonembassyusa.org/mainFolder/images/tourist-sites/tourist-site-15.jpg",
-    title: "Waza National Park",
-    text: "The Waza National Park was founded in the year 1934 and was originally meant for hunting reserves. However, in the year 1968, it was converted into a National Park with a land area of about 1,700 km and even became a UNESCO biosphere reserve. This Park is the most accessible and rewarding wildlife viewing experience of Cameroon. Large numbers of elephants, giraffes, hippos, antelopes, monkeys and abundant birdlife welcome the visitors to this natural reserve. This National Park is said to be a special place and the most visited one. With some luck and a very early start, one can even have the good fortune of meeting a lion within the premises of the park.",
-  }, */
+      "https://www.cameroonembassyusa.org/mainFolder/images/tourist-sites/tourist-site-10.jpg",
+    title: "Museum of Bandjoun",
+    text: "Bandjoun was one of the important centres of artistic creation and tradition in the Cameroonian Grassland and the museum exhibits over a hundred important objects depicting this cultural heritage. Rare and wonderful remnants symbolizing African art can be seen in the museum. It houses the historical artifacts that showcase the development of art, craftsmanship, and local history.",
+  },
   {
     image:
       "https://www.cameroonembassyusa.org/mainFolder/images/tourist-sites/tourist-site-12.jpg",
