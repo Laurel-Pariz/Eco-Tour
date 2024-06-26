@@ -10,8 +10,10 @@ export default function CardComponent({ img, title, text }) {
           className="h-full w-full object-cover object-center group-hover:opacity-75"
         />
       </div>
-      <h1 className="mt-4 text-xl font-medium text-gray-700">{title}</h1>
-      <p className="mt-1 text-lg font-medium text-gray-900">{text}</p>
+      <div>
+        <h1 className="mt-4 text-xl font-medium text-gray-700">{title}</h1>
+        <p className="mt-1 text-lg font-medium text-gray-900">{text}</p>
+      </div>
     </div>
   );
 }

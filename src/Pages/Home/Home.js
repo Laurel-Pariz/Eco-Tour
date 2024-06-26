@@ -1,6 +1,6 @@
 import CardComponent from "../../Components/Card";
 import { AppState } from "../../Store/context";
-import { discoverCameroon } from "./Data/data";
+import { discoverCameroon } from "../../Components/Data/data";
 import { Link } from "react-router-dom";
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
       <div className="mb-8">
-        <h1 className="text-gray-900 text-2xl font-medium">
+        <h1 className="text-gray-900 text-2xl uppercase font-medium">
           Touristic Sites
           <span className="text-red-500"> in Cameroon</span>
         </h1>
@@ -24,7 +24,7 @@ export default function Home() {
 
         <hr className="my-4" />
 
-        <h1 className="text-gray-900 text-2xl font-medium">Heritage Sites</h1>
+        <h1 className="text-gray-900 uppercase text-2xl font-medium">Heritage Sites</h1>
 
         <p className="text-gray-900 text-lg">
           Cameroon is one of the older countries of Africa and therefore has a
