@@ -1,5 +1,10 @@
-import { Form, Formik } from "formik";
+import { Form, Formik, Field } from "formik";
 import CustomInput from "../../../Components/CustomerInput";
+import {
+  airportInfor,
+  tourInfo,
+  travelModeInfo,
+} from "../../../Components/Data/data";
 
 export default function BookingForm() {
   return (
@@ -27,7 +32,12 @@ export default function BookingForm() {
             arrivalDate: "",
             arrivalTime: "",
             message: "",
+            selectTour: "",
+            airportArrival: "",
+            travelMode: "",
+            numberOfParticipants: "",
           }}
+          onSubmit={(values) => console.log(values)}
         >
           {({ values, handleChange, handleBlur, isSubmitting }) => (
             <Form>
@@ -97,6 +107,22 @@ export default function BookingForm() {
                     label="City"
                   />
                   <CustomInput
+                    as="select"
+                    name="selectTour"
+                    id="selectTour"
+                    label="Select Tour"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.selectTour}
+                  >
+                    <option value="">--Select Tour--</option>
+                    {tourInfo.map((tour, index) => (
+                      <option key={index} value={tour}>
+                        {tour}
+                      </option>
+                    ))}
+                  </CustomInput>
+                  <CustomInput
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.arrivalDate}
@@ -117,13 +143,61 @@ export default function BookingForm() {
                     label="Time of arrival"
                   />
                   <CustomInput
+                    as="select"
+                    name="airportArrival"
+                    id="airportArrival"
+                    label="Airport of arrival"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.airportArrival}
+                  >
+                    <option value="">--Select airport of arrival--</option>
+                    {airportInfor.map((airport, index) => (
+                      <option key={index} value={airport}>
+                        {airport}
+                      </option>
+                    ))}
+                  </CustomInput>
+                  <CustomInput
+                    as="select"
+                    name="travelMode"
+                    id="travelMode"
+                    label="Select your travel mode"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.travelMode}
+                  >
+                    <option value="">--Select your travel mode--</option>
+                    {travelModeInfo.map((travelMode, index) => (
+                      <option key={index} value={travelMode}>
+                        {travelMode}
+                      </option>
+                    ))}
+                  </CustomInput>
+                  {(values.travelMode === "Family" ||
+                    values.travelMode === "Group") && (
+                    <CustomInput
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.numberOfParticipants}
+                      type="text"
+                      id="numberOfParticipants"
+                      name="numberOfParticipants"
+                      placeholder="Number of participants"
+                      label="Number of participants"
+                    />
+                  )}
+                  <CustomInput
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.message}
+                    as="textarea"
                     type="text"
                     id="message"
                     name="message"
                     placeholder="Message"
+                    row={4}
+                    col={4}
                     label="Message"
                   />
                 </div>

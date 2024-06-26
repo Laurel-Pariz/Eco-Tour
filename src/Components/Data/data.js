@@ -663,3 +663,34 @@ export const travelInfo = [
     ],
   },
 ];
+
+export const tourInfo = [
+  "Mount Cameroon National Park",
+  "Wazaa National Park",
+  "Korup National Park",
+  "Dja Faunal Reserve",
+  "Bonoue National Park",
+  "Campo Ma'an National Park",
+  "Limbe Bortanical Gardens",
+  "Ekam Nkam Waterfalls",
+  "Foumban Royal Palace and Museum",
+  "Mefou National Park",
+  "Kribi",
+  "Bafut Palace",
+  "Ngoyla-Mintom Forest",
+];
+
+export const airportInfor = [
+  "Douala International Airport (DLA)",
+  "Yaoundé Nsimalen International Airport (NSI)",
+  "Garoua International Airport (GOU)",
+  "Maroua Salak Airport (MVR)",
+  "Ngaoundéré Airport (NGE)",
+  "Bafoussam Airport (BFX)",
+  "Bertoua Airport (BTA)",
+  "Bamenda Airport (BPC)",
+  "Tiko Airport",
+  "Kribi Airport",
+];
+
+export const travelModeInfo = ["Alone", "Couple", "Family", "Group"];
