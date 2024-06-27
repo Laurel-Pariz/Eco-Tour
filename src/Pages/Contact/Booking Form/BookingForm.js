@@ -36,7 +36,7 @@ export default function BookingForm() {
           <p>Email: </p>
           <p>Phone: {formatCameroonPhoneNumber(+237670112460)}</p>
           <p>Address: </p>
-          <p>website: https: </p>
+          <p>website: https://eco-tourism-booking-platform.web.app</p>
         </div>
       </div>
 
