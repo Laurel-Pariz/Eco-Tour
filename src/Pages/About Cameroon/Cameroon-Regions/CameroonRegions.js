@@ -4,18 +4,22 @@ import { regionsInfo } from "../../../Components/Data/data";
 export default function CameroonRegions() {
   return (
     <div className="mt-10 mx-20 px-20">
-      <h1>Cameroon's Regions</h1>
+      <h1 className="text-gray-800 text-center text-4xl font-bold">
+        Cameroon's <span className="text-red-500">Regions</span>
+      </h1>
 
       <div>
         {regionsInfo.map((region, index) => (
-          <div key={index}>
-            <h2>
-              {" "}
-              {index + 1} {region.region}
+          <div key={index} className="my-8 text-lg">
+            <h2 className="text-2xl font-medium text-gray-800">
+              {index + 1} {region.region} ({region.capital})
             </h2>
-            <p>
-              <strong>Capital:</strong> {region.capital}
-            </p>
+            <img
+              src={region.image}
+              alt={region.capital}
+              className="my-4"
+              style={{ width: "70rem", height: "25rem" }}
+            />
             <p>
               <strong>Geography:</strong> {region.geography}
             </p>

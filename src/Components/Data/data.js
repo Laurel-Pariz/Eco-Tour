@@ -316,6 +316,8 @@ export const regionsInfo = [
   {
     region: "Adamawa",
     capital: "Ngaoundéré",
+    image:
+      "https://avatars.mds.yandex.net/i?id=789f458e5c9668de96a90e74eddb3f7e10721a01-10754985-images-thumbs&n=13",
     geography:
       "Known for its high plateaus, the Adamawa region is the geographic heart of Cameroon. It features rolling hills, savannas, and the notable Adamawa Plateau.",
     culture:
@@ -328,6 +330,8 @@ export const regionsInfo = [
   {
     region: "Centre",
     capital: "Yaoundé",
+    image:
+      "https://avatars.mds.yandex.net/i?id=a216ff2221f550f75488a4316c2b20311755db07-9853136-images-thumbs&n=13",
     geography:
       "Characterized by forested areas and rolling hills, with a humid equatorial climate. It is centrally located, providing a hub for transportation and communication.",
     culture:
@@ -340,6 +344,8 @@ export const regionsInfo = [
   {
     region: "East",
     capital: "Bertoua",
+    image:
+      "https://avatars.mds.yandex.net/i?id=e254d953e66f2c695e684c6e2729c2940c09f061-5477099-images-thumbs&n=13",
     geography:
       "Dominated by dense rainforests and numerous rivers, it is the largest region in Cameroon. The region has a tropical climate with significant rainfall.",
     culture:
@@ -352,6 +358,8 @@ export const regionsInfo = [
   {
     region: "Far North",
     capital: "Maroua",
+    image:
+      "https://avatars.mds.yandex.net/i?id=e0c03211f39e114e8c32fc4140f083aefd7e3230-5879159-images-thumbs&n=13",
     geography:
       "Features semi-arid landscapes, including parts of the Sahel and savanna. The region also contains the Mandara Mountains and Lake Chad.",
     culture:
@@ -364,6 +372,8 @@ export const regionsInfo = [
   {
     region: "Littoral",
     capital: "Douala",
+    image:
+      "https://yandex-images.clstorage.net/4YRP9v202/26cbd4U1I/iXiCiB50kMQKUy-2IpYysvGyHlm8FP-C1p6CZWFYM6-7azEz-TobrTpKoyCz299nyrVV2yzGumyYJyQHjckVLJxEi5EveZyZeyYHwxOmLpbhzzIsnBXj856y3gglfSOe01sxImCDznG-sgahThoehu_xYK8h7uM9-UqU_-kcKJBFkNIIPixNyDIb6gbarpY6AcsqUezRlxeO-lfwPYmGVtaC1Kas98ZZ7kIyjULKXuoTFXAzbQfHpeE6sGqJeEDQyZCmgBKY6eQej2puUqK-Zj2X_qm0fUuTdl472HUtxra-KnhGUCuCFYKmojWuAloev-n8lyHDH9lhOkxOyeC0XBl8yuBaoEXEouNSGlZaTmal6xpdgCFrC06iSziBgf4qLvbAKsjfYhH6ntrFeqYS6gMdyH8pa1PplV4wPtnELEA9nJZ0ijjxcIpPIjrCuhI63TP-CeRhp7_mAgMk8Y1u0m4WYM5Qe6plBkYaVdIW9upL6QQrucffrcF61MrFeKjcgZSaDJIgvdCCRzoCWjaCFvkL-ul8-d8rrvaHdDnhxrZ-_kSKtKeGsR6qqnHGjgqyr31wJ9Ufs7mt7kAiOWBYnJ2EZkguFJmUpqtyihI6rhJN6-pdQNlrl-IS84jt9VbqJnow3tSnbkUCDvLFwgKauiuxcOMRwwONBdq03kk05PCxgE5UUlgdYB7z_sqadsKaMZMyVRCl72sKkqukgcG64kL2bEa09_pJ1l5-4fYusi6zaUzffbefkZHWgBKpEDy43ZCy6Kq0ESya62YqfnqGet0TPlGQBZ8XOqKXsH1p3upaSsBOpKcq_R6uhkFeMn5qo1m83y0nT2GJ9ixi8XQUVLn45sQ-oGV4Om_mOvY-Avq5H3oBJO2P96YmW9AF3epGUv4UvnTLkk1uDubhXuYW-kNdyP9970eFhdr8YtGctMA57AoI0oDBFKJbMjpano7GSbNCSazx47tibp9IeR1E",
     geography:
       "Coastal region with significant maritime influence. It has a tropical climate with high humidity and significant rainfall.",
     culture:
@@ -376,6 +386,8 @@ export const regionsInfo = [
   {
     region: "North",
     capital: "Garoua",
+    image:
+      "https://avatars.mds.yandex.net/i?id=c6f691082733b64f062c7456605f87b14994420b-7546197-images-thumbs&n=13",
     geography:
       "Characterized by savannas and the Benue River valley. The region has a tropical climate with a distinct wet and dry season.",
     culture:
@@ -388,6 +400,8 @@ export const regionsInfo = [
   {
     region: "Northwest",
     capital: "Bamenda",
+    image:
+      "https://yandex-images.clstorage.net/4YRP9v202/26cbd4U1I/iXiCiB50kMQKUy-2IpYysvGyHlm8FP-C1p6CZWFMJ5b-KzUykSoC7Scf7nCKir4z2-1UrnWGmnCQLwwH3Ik9PdRF45EuGOn4IlcvuhayXpbtnj5lnASvnt__3-zdzeZ6FpK8ygDb8pEydqp9i762Ar8Jpb_11z_5dSq4JvlMRHjVqA5EJqBFGCZPUsrSxrqGpRfGfWihZ5sGGlsgqcXOKuamkMbQm55t1mY2MWKaLhrPLTDfkb9_dXVeMApN6GhUQShmzCqIGSR6m6qSfho-fgF77jXM4Yfzrra73HWBgkYCNigqGJ9qwSrqkn2mQlKaz9EUnwlL86WZMlBCdURI6C0QEsjSeBm8Bn9epiI6pkb9Cw7BYNkbY3IO10SBYYY-Ok7Y_rzXnn3e3np1Dg5ibqutZI8t0--BeW7Eku3w_MCBYDJcMiRFxN6bCsJi9hLuXUMSsWxJ4yOSrjPcJanywuKOSFYMM541KhIu5aKCJjqPSZCTkVdzPXFivIr1vFzIiXgKxL60aeDmn-pa-o6GpqnHQnkA4Yczeop3OPmFJtoOPmxClM_G0b5mIol67jJWG914b4mnMyFhnvg2wZgY7GUwgoyymG1UBo9eZto6OupNs76tFHHba_7-I1j5bdLGqmbYRhhfzlVyZuZNpl4G_i8phB_dG18NZbbkSo0c7FQ9vMIE_vTlKH5XVjamvsYCzeuSwSCd0w9yors4qfneEvrq_HI0d1rNqlraIdLCGmojHUj_-cMXYXVKWLJhEKDQJSQi4PKwBcT-W1K2Bs66Mv3Xhj2I-dsXzg6zKPkpatoKElzaKLse3Zqq2nFCEupyA7E4p53r-wUdHnQmdWT0cKGkMmi2NIWg8h8CAu7eWq55G-ZFPM13H3raQ_iVkdqqqnL82vzTjj2e3vohihoOfi9hOId1S2-FCfK4ylXAmOiVcDLEFri5UF4nSoryshZqMd9-Ofxhj--eWouIgSHA",
     geography:
       "Mountainous terrain with cooler temperatures compared to the rest of the country. The region also features fertile highlands and scenic landscapes.",
     culture:
@@ -400,6 +414,8 @@ export const regionsInfo = [
   {
     region: "South",
     capital: "Ebolowa",
+    image:
+      "https://avatars.mds.yandex.net/i?id=6068b75aebf864b304cf3b72bdc22a44-4600603-images-thumbs&n=13",
     geography:
       "Lush rainforests and coastal plains with a humid tropical climate. The region has numerous rivers and biodiversity hotspots.",
     culture:
@@ -412,6 +428,8 @@ export const regionsInfo = [
   {
     region: "Southwest",
     capital: "Buea",
+    image:
+      "https://avatars.mds.yandex.net/i?id=276d951687cf6efca23fff867eff27eea3ccd741-9882580-images-thumbs&n=13",
     geography:
       "Volcanic mountains, coastal plains, and rainforests. The region is home to Mount Cameroon, the highest peak in West Africa.",
     culture:
@@ -424,6 +442,8 @@ export const regionsInfo = [
   {
     region: "West",
     capital: "Bafoussam",
+    image:
+      "https://avatars.mds.yandex.net/i?id=75581a6f30fe3f294100687c9c771bc450503f94-6257657-images-thumbs&n=13",
     geography:
       "Mountainous and hilly terrain with fertile volcanic soils. The region has a moderate climate and rich vegetation.",
     culture:
