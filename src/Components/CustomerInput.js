@@ -29,12 +29,12 @@ export default function CustomInput({
     <div className="sm:col-span-4">
       <label
         htmlFor={id}
-        className="block text-sm font-medium leading-6 text-gray-900"
+        className="block text-lg font-medium leading-6 text-gray-800"
       >
         {label}
       </label>
       <div className="mt-2">
-        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-800 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
           {as === "select" ? (
             <Field as="select" {...inputProps}>
               {children}
