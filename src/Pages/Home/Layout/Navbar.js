@@ -13,7 +13,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink } from "react-router-dom";
 import { AppState } from "../../../Store/context";
 
-const navigation = [
+export const navigation = [
   { name: "Home", href: "/home", current: true },
   { name: "Our Tours", href: "our-tours", current: false },
   { name: "Regions", href: "cameroon-regions", current: false },
@@ -21,7 +21,7 @@ const navigation = [
   { name: "Visa / Safety", href: "visa-health-safety", current: false },
   { name: "Information", href: "general-information", current: false },
   { name: "About", href: "about-us", current: false },
-  { name: "Bookings", href: "booking-form", current: false },
+  { name: "Booking Form", href: "booking-form", current: false },
   {name: "Auth Page", href: "sign-in"}
 ];
 
@@ -30,7 +30,6 @@ function classNames(...classes) {
 }
 
 export default function Example() {
-//   const { user } = AppState();
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
