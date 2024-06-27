@@ -5,38 +5,73 @@ import {
   tourInfo,
   travelModeInfo,
 } from "../../../Components/Data/data";
+import { Link } from "react-router-dom";
 
 export default function BookingForm() {
   function formatCameroonPhoneNumber(phoneNumber) {
     // Remove all non-digit characters
     const digits = phoneNumber.toString().replace(/\D/g, "");
 
-    // Check if the phone number already starts with +237
+    // Check if the phone number already starts with 237
     if (digits.startsWith("237")) {
       // Ensure it starts with +237
-      return `+${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(
-        6,
-        9
-      )} ${digits.slice(9, 12)}`;
+      return `+237 ${digits.slice(3, 6)} ${digits.slice(6, 9)} ${digits.slice(
+        9,
+        12
+      )}`;
     }
 
-    // If it doesn't start with +237, add it
+    // If it doesn't start with 237, add it
     return `+237 ${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(
       6,
       9
     )}`;
   }
 
+  const handleEmailEvent = (e) => {
+    e.preventDefault();
+    window.open(
+      "https://mail.google.com/mail/?view=cm&fs=1&to=camecotour@gmail.com",
+      "_blank"
+    );
+  };
+
+  const phoneNumber = "+237670112460";
+
   return (
     <div className="mx-auto px-4 container">
-      <h1>Booking Form Page</h1>
       <div>
         <h1>Reservations</h1>
         <div>
-          <p>Email: </p>
-          <p>Phone: {formatCameroonPhoneNumber(+237670112460)}</p>
+          <p>
+            Email:{" "}
+            <span>
+              <Link to="mailto:camecotour@gmail.com" onClick={handleEmailEvent}>
+                camecotour@gmail.com
+              </Link>
+            </span>
+          </p>
+          <p>
+            Phone:{" "}
+            <span>
+              <a href={`tel:${phoneNumber}`}>
+                {formatCameroonPhoneNumber(phoneNumber)}
+              </a>
+            </span>
+          </p>
           <p>Address: </p>
-          <p>website: https://eco-tourism-booking-platform.web.app</p>
+          <p>
+            website:{" "}
+            <span>
+              <a
+                href="https://eco-tourism-booking-platform.web.app"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                https://eco-tourism-booking-platform.web.app
+              </a>
+            </span>
+          </p>
         </div>
       </div>
 
@@ -222,7 +257,11 @@ export default function BookingForm() {
                   />
                 </div>
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                  <button className="uppercase" type="submit">
+                  <button
+                    className="uppercase"
+                    disabled={isSubmitting}
+                    type="submit"
+                  >
                     send
                   </button>
                 </div>
