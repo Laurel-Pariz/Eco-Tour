@@ -6,9 +6,8 @@ export default function GeneralInformation () {
     <h1>General Information about Cameroon</h1>
     {generalInfo.map((info, index) => (
       <div key={index}>
-        <h2>{info.title}</h2>
+        <h2> {index + 1} {info.title}</h2>
         <p>{info.content}</p>
-        {index !== generalInfo.length - 1 && <hr />} {/* Add hr except for the last item */}
       </div>
     ))}
   </div>
