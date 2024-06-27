@@ -14,7 +14,7 @@ export default function VisaHealth() {
               <h3 className="my-2 text-gray-800 text-2xl font-medium">
                 - {item.subtitle}
               </h3>
-              <p className="text-lg">{item.details}</p>
+              <p className="text-xl">{item.details}</p>
             </div>
           ))}
         </div>
