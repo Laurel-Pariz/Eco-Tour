@@ -10,6 +10,35 @@ export default function Tours() {
     );
   };
 
+  function formatMoney(amount, currency) {
+    let formatter;
+
+    switch (currency) {
+      case "USD":
+        formatter = new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+        });
+        break;
+      case "XOF":
+        formatter = new Intl.NumberFormat("fr-FR", {
+          style: "currency",
+          currency: "XOF",
+        });
+        break;
+      default:
+        throw new Error("Unsupported currency");
+    }
+
+    return formatter.format(amount);
+  }
+
+  function convertUSDtoXOF(amountInUSD) {
+    const exchangeRate = 605; // Example exchange rate, 1 USD = 605 XOF
+
+    return amountInUSD * exchangeRate;
+  }
+
   return (
     <div className="mx-20 px-20 mt-8">
       <h1 className="text-4xl text-center mb-4 text-gray-800 font-medium">
@@ -60,11 +89,17 @@ export default function Tours() {
               </p>
               <p className="my-2">
                 Price:{" "}
-                <span className="text-red-500">{site.price3Persons}</span>
+                <span className="text-red-500">
+                  {formatMoney(site.price3Persons, "USD")} /{" "}
+                  {formatMoney(convertUSDtoXOF(site.price3Persons), "XOF")}
+                </span>
               </p>
               <p className="my-2">
                 Price:{" "}
-                <span className="text-red-500">{site.price2Persons}</span>
+                <span className="text-red-500">
+                  {formatMoney(site.price2Persons, "USD")} /{" "}
+                  {formatMoney(convertUSDtoXOF(site.price2Persons), "XOF")}
+                </span>
               </p>
               <p className="my-2">
                 Start:{" "}
