@@ -171,7 +171,7 @@ export const cultureInfo = [
 
 export const languageInfo = [
   {
-    category: "officialLanguages",
+    category: "OfficialLanguages",
     languages: [
       {
         language: "French",
@@ -190,7 +190,7 @@ export const languageInfo = [
     ],
   },
   {
-    category: "nationalLanguages",
+    category: "NationalLanguages",
     languages: [
       {
         language: "Fulfulde",
@@ -216,7 +216,7 @@ export const languageInfo = [
     ],
   },
   {
-    category: "otherLanguages",
+    category: "OtherLanguages",
     languages: [
       {
         language: "Bassa",
@@ -242,7 +242,7 @@ export const languageInfo = [
 
 export const religionInfo = [
   {
-    category: "christianity",
+    category: "Christianity",
     faiths: [
       {
         faith: "Roman Catholicism",
@@ -266,7 +266,7 @@ export const religionInfo = [
     ],
   },
   {
-    category: "islam",
+    category: "Islam",
     faiths: [
       {
         faith: "Sunni Islam",
@@ -278,7 +278,7 @@ export const religionInfo = [
     ],
   },
   {
-    category: "traditionalReligion",
+    category: "TraditionalReligion",
     faiths: [
       {
         faith: "Ancestral Worship and Animism",
@@ -296,7 +296,7 @@ export const religionInfo = [
     ],
   },
   {
-    category: "religiousCoexistence",
+    category: "ReligiousCoexistence",
     faiths: [
       {
         faith: "Interfaith Harmony",

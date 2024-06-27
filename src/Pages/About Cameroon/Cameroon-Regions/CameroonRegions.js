@@ -21,16 +21,16 @@ export default function CameroonRegions() {
               style={{ width: "70rem", height: "25rem" }}
             />
             <p>
-              <strong>Geography:</strong> {region.geography}
+              <strong className="text-gray-800">Geography:</strong> {region.geography}
             </p>
             <p>
-              <strong>Culture:</strong> {region.culture}
+              <strong className="text-gray-800">Culture:</strong> {region.culture}
             </p>
             <p>
-              <strong>Economy:</strong> {region.economy}
+              <strong className="text-gray-800">Economy:</strong> {region.economy}
             </p>
             <p>
-              <strong>Tourism:</strong> {region.tourism}
+              <strong className="text-gray-800">Tourism:</strong> {region.tourism}
             </p>
           </div>
         ))}
