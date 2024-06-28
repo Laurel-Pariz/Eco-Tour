@@ -29,6 +29,7 @@ export const BookedToursServices = async (userId) => {
         dayOfTourPlaced: doc.data().dayOfTourPlaced,
       });
     });
+    console.log("tours-service: ", bookedTours);
     return bookedTours;
   } catch (err) {
     return Promise.reject(err instanceof Error ? err : new Error(err));

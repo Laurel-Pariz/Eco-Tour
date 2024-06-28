@@ -8,11 +8,7 @@ import {
   MenuItems,
   Transition,
 } from "@headlessui/react";
-import {
-  Bars3Icon,
-  XMarkIcon,
-  UserIcon,
-} from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon, UserIcon } from "@heroicons/react/24/outline";
 import { NavLink, useLocation } from "react-router-dom";
 import { AppState } from "../../../Store/context";
 
@@ -65,7 +61,7 @@ export default function Example() {
                 <div className="flex flex-shrink-0 items-center">
                   <NavLink to="/">
                     <span className="text-lg font-medium text-white">
-                      Eco-Tourism
+                      Eco-Tour
                     </span>
                   </NavLink>
                 </div>
@@ -97,20 +93,18 @@ export default function Example() {
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>
-                    <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                      <span className="absolute -inset-1.5" />
-                      <span className="sr-only">Open user menu</span>
-                      {user ? (
+                    {user ? (
+                      <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                         <UserIcon className="h-8 w-8 text-white" />
-                      ) : (
-                        <NavLink
-                          to="sign-in"
-                          className=" bg-gray-800 ml-4 rounded-md block px-4 py-2 text-lg font-medium text-white"
-                        >
-                          Log In
-                        </NavLink>
-                      )}
-                    </MenuButton>
+                      </MenuButton>
+                    ) : (
+                      <NavLink
+                        to="sign-in"
+                        className=" bg-gray-800 ml-4 rounded-md block px-4 py-2 text-lg font-medium text-white"
+                      >
+                        Log In
+                      </NavLink>
+                    )}
                   </div>
                   <Transition
                     enter="transition ease-out duration-100"
