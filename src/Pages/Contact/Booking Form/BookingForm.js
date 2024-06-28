@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Form, Formik } from "formik";
 import CustomInput from "../../../Components/CustomerInput";
 import {
@@ -6,8 +7,25 @@ import {
   travelModeInfo,
 } from "../../../Components/Data/data";
 import { Link } from "react-router-dom";
+import { store } from "../../../Configs/firebase";
+import { addDoc, collection } from "firebase/firestore";
+import { AppState } from "../../../Store/context";
 
 export default function BookingForm() {
+  const { user } = AppState();
+  const [showModal, setShowModal] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const userId = user?.uid;
+  console.log("userId: ", userId);
+
+  console.log("Complete value: ", isCompleted.toString());
+  console.log("Complete value 2: ", !!isCompleted.toString());
+
+  const handleModalAction = () => {
+    setShowModal(false);
+    setIsCompleted((prevState) => !prevState);
+  };
+
   function formatCameroonPhoneNumber(phoneNumber) {
     // Remove all non-digit characters
     const digits = phoneNumber.toString().replace(/\D/g, "");
@@ -37,6 +55,58 @@ export default function BookingForm() {
   };
 
   const phoneNumber = "+237670112460";
+
+  
+
+  const handleTourSubmitForm = async (values, actions) => {
+    if (!user) {
+      alert("You must be authenticated to submit the form.");
+      return;
+    }
+
+    const db = store;
+    const tourRef = collection(db, userId, "booking", "tours");
+    try {
+      await addDoc(tourRef, {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        phone: values.phone,
+        country: values.country,
+        city: values.city,
+        arrivalDate: values.arrivalDate,
+        arrivalTime: values.arrivalTime,
+        message: values.message,
+        selectTour: values.selectTour,
+        travelMode: values.travelMode,
+        numberOfParticipants: values.numberOfParticipants,
+        airportArrival: values.airportArrival,
+      });
+      setShowModal(true);
+      if (isCompleted) {
+        actions.resetForm({
+          values: {
+            firstName: "",
+            lastName: "",
+            email: "",
+            phone: "",
+            country: "",
+            city: "",
+            arrivalDate: "",
+            arrivalTime: "",
+            message: "",
+            selectTour: "",
+            airportArrival: "",
+            travelMode: "",
+            numberOfParticipants: "",
+          },
+        });
+      }
+      alert("Submit success");
+    } catch (error) {
+      alert(`Error submitting form: ${error.message}`);
+    }
+  };
 
   return (
     <div className="mx-20 px-20 mt-10 container">
@@ -99,7 +169,7 @@ export default function BookingForm() {
             travelMode: "",
             numberOfParticipants: "",
           }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={handleTourSubmitForm}
         >
           {({ values, handleChange, handleBlur, isSubmitting }) => (
             <Form>
