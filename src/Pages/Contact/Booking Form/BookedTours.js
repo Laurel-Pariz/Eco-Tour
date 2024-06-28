@@ -62,7 +62,6 @@ export default function BookedTours() {
 
   return (
     <div className="mx-20 px-20">
-      <h1>Booked Tours Page</h1>
       <div className="grid">
         {TOURS}
       </div>

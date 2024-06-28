@@ -31,6 +31,7 @@ export const BookedToursServices = async (userId) => {
         travelMode: doc.data().travelMode,
         numberOfParticipants: doc.data().numberOfParticipants,
         airportArrival: doc.data().airportArrival,
+        arrivalTime: doc.data().arrivalTime,
         timeOfTourPlaced: doc.data().timeOfTourPlaced,
         dayOfTourPlaced: doc.data().dayOfTourPlaced,
       });
@@ -61,6 +62,7 @@ export const BookedTourService = async (userId, tourId) => {
         travelMode: tourSnapshot.data().travelMode,
         numberOfParticipants: tourSnapshot.data().numberOfParticipants,
         airportArrival: tourSnapshot.data().airportArrival,
+        arrivalTime: tourSnapshot.data().arrivalTime,
         timeOfTourPlaced: tourSnapshot.data().timeOfTourPlaced,
         dayOfTourPlaced: tourSnapshot.data().dayOfTourPlaced,
       };

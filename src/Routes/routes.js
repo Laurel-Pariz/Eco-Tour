@@ -8,6 +8,7 @@ import AboutUs from "../Pages/Contact/AboutUs/AboutUs";
 import BookingForm from "../Pages/Contact/Booking Form/BookingForm";
 import AuthPage from "../Pages/Authentication/AuthPage";
 import BookedTours from "../Pages/Contact/Booking Form/BookedTours";
+import SingleTour from "../Pages/Contact/Booking Form/SingleTour";
 
 export const AppRoutes = [
   {
@@ -52,7 +53,11 @@ export const AppRoutes = [
     element: <AuthPage />,
   },
   {
-    path: "/booked-tours",
+    path: "/booked-tours/",
     element: <BookedTours />,
+  },
+  {
+    path: "/tours/booked-tours/:id",
+    element: <SingleTour />,
   },
 ];

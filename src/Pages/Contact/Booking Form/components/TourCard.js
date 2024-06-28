@@ -58,7 +58,7 @@ export default function TourCard({ tourData, deleteHandler }) {
           Delete Tour
         </button>
         <Link
-          to={`eco-tour/booked-tours/${id}`}
+          to={`/tours/booked-tours/${id}`}
           className=" bg-gray-800 rounded-md p-2 my-4 mx-4 text-white text-lg font-medium"
           target="_blank"
         >

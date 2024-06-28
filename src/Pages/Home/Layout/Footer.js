@@ -6,7 +6,10 @@ export default function Footer() {
   const currYear = new Date().getFullYear();
 
   const quickLinks = navigation.filter(
-    (name) => name.name !== "Home" && name.name !== "Auth Page"
+    (name) =>
+      name.name !== "Home" &&
+      name.name !== "Auth Page" &&
+      name.name !== "Booking Form"
   );
 
   return (
@@ -22,6 +25,11 @@ export default function Footer() {
                 </Link>
               </li>
             ))}
+            <li className="py-1">
+              <Link to="booked-tours" className="text-lg text-gray-300">
+                Booked Tours
+              </Link>
+            </li>
           </ul>
         </div>
         <div></div>
