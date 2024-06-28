@@ -56,14 +56,14 @@ export default function BookingForm() {
 
   const phoneNumber = "+237670112460";
 
-  
-
   const handleTourSubmitForm = async (values, actions) => {
     if (!user) {
       alert("You must be authenticated to submit the form.");
       return;
     }
 
+    const timeOfTourPlaced = new Date().toTimeString().split(" ")[0];
+    const dayOfTourPlaced = new Date().toDateString();
     const db = store;
     const tourRef = collection(db, userId, "booking", "tours");
     try {
@@ -81,6 +81,8 @@ export default function BookingForm() {
         travelMode: values.travelMode,
         numberOfParticipants: values.numberOfParticipants,
         airportArrival: values.airportArrival,
+        timeOfTourPlaced: timeOfTourPlaced,
+        dayOfTourPlaced: dayOfTourPlaced,
       });
       setShowModal(true);
       if (isCompleted) {
