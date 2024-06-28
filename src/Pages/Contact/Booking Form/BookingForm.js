@@ -273,7 +273,7 @@ export default function BookingForm() {
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <button
                     className="uppercase text-xl font-medium rounded-md my-4 p-4 tracking-wildest text-white mx-4 bg-gray-800"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting ? "text-gray-300" : ""}
                     type="submit"
                   >
                     send
