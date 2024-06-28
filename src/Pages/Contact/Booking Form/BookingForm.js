@@ -13,18 +13,12 @@ import { AppState } from "../../../Store/context";
 
 export default function BookingForm() {
   const { user } = AppState();
-  const [showModal, setShowModal] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
   const userId = user?.uid;
   console.log("userId: ", userId);
 
   console.log("Complete value: ", isCompleted.toString());
   console.log("Complete value 2: ", !!isCompleted.toString());
-
-  const handleModalAction = () => {
-    setShowModal(false);
-    setIsCompleted((prevState) => !prevState);
-  };
 
   function formatCameroonPhoneNumber(phoneNumber) {
     // Remove all non-digit characters
@@ -84,8 +78,8 @@ export default function BookingForm() {
         timeOfTourPlaced: timeOfTourPlaced,
         dayOfTourPlaced: dayOfTourPlaced,
       });
-      setShowModal(true);
-      if (isCompleted) {
+      setIsCompleted(true);
+      if (!isCompleted) {
         actions.resetForm({
           values: {
             firstName: "",

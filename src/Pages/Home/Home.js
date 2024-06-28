@@ -24,7 +24,9 @@ export default function Home() {
 
         <hr className="my-4" />
 
-        <h1 className="text-gray-900 uppercase text-2xl font-medium">Heritage Sites</h1>
+        <h1 className="text-gray-900 uppercase text-2xl font-medium">
+          Heritage Sites
+        </h1>
 
         <p className="text-gray-900 text-lg">
           Cameroon is one of the older countries of Africa and therefore has a
@@ -50,10 +52,12 @@ export default function Home() {
         ))}
       </div>
 
-      <Link to="/our-tours">Book Tour(s)</Link>
-
-      <p>User Email : {user?.email}</p>
-      <p>User Name : {user?.displayName}</p>
+      <Link
+        to="/our-tours"
+        className="text-lg mx-4 flex justify-center mt-10 my-2 p-2 rounded-md text-white bg-gray-800 text-center font-medium"
+      >
+        View Tours
+      </Link>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useQuery } from "react-query";
 import { BookedToursServices } from "../../../Services/service";
 import { AppState } from "../../../Store/context";
@@ -15,10 +15,8 @@ export default function BookedTours() {
     isLoading,
     isLoadingError,
     isRefetchError,
-    isRefetching,
     isError,
     error,
-    isSuccess,
     refetch,
   } = useQuery(["tours", userId], () => BookedToursServices(userId), {
     enabled: !!userId,

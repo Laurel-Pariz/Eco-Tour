@@ -1,5 +1,4 @@
-import logo from "./logo.svg";
-import "./App.css";
+
 import React from "react";
 import Navbar from "./Pages/Home/Layout/Navbar";
 import { IndexRoutes } from "./Routes";

@@ -1,17 +1,10 @@
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  Timestamp,
-} from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
 import { store } from "../Configs/firebase";
 
 export const BookedToursServices = async (userId) => {
   try {
     const db = store;
-    const toursRef = collection(db, userId + "/booking/" + "tours");
+    const toursRef = collection(db, `${userId}/booking/tours`);
     const q = query(toursRef);
     const querySnapshot = await getDocs(q);
 
@@ -44,7 +37,7 @@ export const BookedToursServices = async (userId) => {
 
 export const BookedTourService = async (userId, tourId) => {
   try {
-    const tourRef = doc(store, userId + "/booking/" + "tours/" + tourId);
+    const tourRef = doc(store, `${userId}/booking/tours/${tourId}`);
     const tourSnapshot = await getDoc(tourRef);
 
     if (tourSnapshot.exists()) {

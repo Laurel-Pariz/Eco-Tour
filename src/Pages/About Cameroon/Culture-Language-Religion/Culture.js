@@ -1,4 +1,3 @@
-import CardComponent from "../../../Components/Card";
 import {
   cultureInfo,
   languageInfo,
