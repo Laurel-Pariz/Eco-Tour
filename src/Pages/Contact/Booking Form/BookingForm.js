@@ -74,6 +74,11 @@ export default function BookingForm() {
               </a>
             </span>
           </p>
+
+          <p className="text-2xl text-red-500">
+            <strong>NB:</strong> Please ensure you are authenticated before
+            filling out any information to avoid loss of data.
+          </p>
         </div>
       </div>
 
