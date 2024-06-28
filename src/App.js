@@ -1,24 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import React from "react";
+import Navbar from "./Pages/Home/Layout/Navbar";
+import { IndexRoutes } from "./Routes";
+import Footer from "./Pages/Home/Layout/Footer";
+import { useRoutes } from "react-router-dom";
 
 function App() {
+  const AppRoutes = useRoutes(IndexRoutes);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <Navbar />
+      {AppRoutes}
+      <Footer />
+    </React.Fragment>
   );
 }
 
