@@ -7,13 +7,17 @@ import {
   MenuItem,
   MenuItems,
   Transition,
-  Button,
 } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  BellIcon,
+  XMarkIcon,
+  UserIcon,
+} from "@heroicons/react/24/outline";
 import { NavLink } from "react-router-dom";
 import { AppState } from "../../../Store/context";
 
-const navigation = [
+export const navigation = [
   { name: "Home", href: "/home", current: true },
   { name: "Our Tours", href: "our-tours", current: false },
   { name: "Regions", href: "cameroon-regions", current: false },
@@ -21,8 +25,7 @@ const navigation = [
   { name: "Visa / Safety", href: "visa-health-safety", current: false },
   { name: "Information", href: "general-information", current: false },
   { name: "About", href: "about-us", current: false },
-  { name: "Bookings", href: "booking-form", current: false },
-  {name: "Auth Page", href: "sign-in"}
+  { name: "Booking Form", href: "booking-form", current: false },
 ];
 
 function classNames(...classes) {
@@ -30,7 +33,15 @@ function classNames(...classes) {
 }
 
 export default function Example() {
-//   const { user } = AppState();
+  const { user, signOutHandler } = AppState();
+
+  const handleSignOut = async () => {
+    try {
+      await signOutHandler();
+    } catch (error) {
+      throw new Error("Error signing out, please try agin");
+    }
+  };
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -53,7 +64,9 @@ export default function Example() {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
                   <NavLink to="/">
-                    <span>Eco-Tourism</span>
+                    <span className="text-lg font-medium text-white">
+                      Eco-Tourism
+                    </span>
                   </NavLink>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
@@ -78,26 +91,22 @@ export default function Example() {
               </div>
 
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button
-                  type="button"
-                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
-
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      />
+                      {user ? (
+                        <UserIcon className="h-8 w-8 text-white" />
+                      ) : (
+                        <NavLink
+                          to="sign-in"
+                          className=" bg-gray-800 ml-4 rounded-md block px-4 py-2 text-lg font-medium text-white"
+                        >
+                          Log In
+                        </NavLink>
+                      )}
                     </MenuButton>
                   </div>
                   <Transition
@@ -111,41 +120,26 @@ export default function Example() {
                     <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <MenuItem>
                         {({ focus }) => (
-                          <a
-                            href="#"
+                          <NavLink
+                            to="booked-tours"
                             className={classNames(
                               focus ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              "block px-4 py-2 text-lg font-medium text-gray-800"
                             )}
                           >
-                            Your Profile
-                          </a>
+                            Booked Tours
+                          </NavLink>
                         )}
                       </MenuItem>
                       <MenuItem>
                         {({ focus }) => (
-                          <a
-                            href="#"
-                            className={classNames(
-                              focus ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Settings
-                          </a>
-                        )}
-                      </MenuItem>
-                      <MenuItem>
-                        {({ focus }) => (
-                          <a
-                            href="#"
-                            className={classNames(
-                              focus ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
+                          <button
+                            onClick={handleSignOut}
+                            type="button"
+                            className=" bg-gray-800 ml-4 rounded-md block px-4 py-2 text-lg font-medium text-white"
                           >
                             Sign out
-                          </a>
+                          </button>
                         )}
                       </MenuItem>
                     </MenuItems>

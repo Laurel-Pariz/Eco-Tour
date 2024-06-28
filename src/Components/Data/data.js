@@ -171,7 +171,7 @@ export const cultureInfo = [
 
 export const languageInfo = [
   {
-    category: "officialLanguages",
+    category: "OfficialLanguages",
     languages: [
       {
         language: "French",
@@ -190,7 +190,7 @@ export const languageInfo = [
     ],
   },
   {
-    category: "nationalLanguages",
+    category: "NationalLanguages",
     languages: [
       {
         language: "Fulfulde",
@@ -216,7 +216,7 @@ export const languageInfo = [
     ],
   },
   {
-    category: "otherLanguages",
+    category: "OtherLanguages",
     languages: [
       {
         language: "Bassa",
@@ -242,7 +242,7 @@ export const languageInfo = [
 
 export const religionInfo = [
   {
-    category: "christianity",
+    category: "Christianity",
     faiths: [
       {
         faith: "Roman Catholicism",
@@ -266,7 +266,7 @@ export const religionInfo = [
     ],
   },
   {
-    category: "islam",
+    category: "Islam",
     faiths: [
       {
         faith: "Sunni Islam",
@@ -278,7 +278,7 @@ export const religionInfo = [
     ],
   },
   {
-    category: "traditionalReligion",
+    category: "TraditionalReligion",
     faiths: [
       {
         faith: "Ancestral Worship and Animism",
@@ -296,7 +296,7 @@ export const religionInfo = [
     ],
   },
   {
-    category: "religiousCoexistence",
+    category: "ReligiousCoexistence",
     faiths: [
       {
         faith: "Interfaith Harmony",
@@ -316,6 +316,8 @@ export const regionsInfo = [
   {
     region: "Adamawa",
     capital: "Ngaoundéré",
+    image:
+      "https://avatars.mds.yandex.net/i?id=789f458e5c9668de96a90e74eddb3f7e10721a01-10754985-images-thumbs&n=13",
     geography:
       "Known for its high plateaus, the Adamawa region is the geographic heart of Cameroon. It features rolling hills, savannas, and the notable Adamawa Plateau.",
     culture:
@@ -328,6 +330,8 @@ export const regionsInfo = [
   {
     region: "Centre",
     capital: "Yaoundé",
+    image:
+      "https://avatars.mds.yandex.net/i?id=a216ff2221f550f75488a4316c2b20311755db07-9853136-images-thumbs&n=13",
     geography:
       "Characterized by forested areas and rolling hills, with a humid equatorial climate. It is centrally located, providing a hub for transportation and communication.",
     culture:
@@ -340,6 +344,8 @@ export const regionsInfo = [
   {
     region: "East",
     capital: "Bertoua",
+    image:
+      "https://avatars.mds.yandex.net/i?id=e254d953e66f2c695e684c6e2729c2940c09f061-5477099-images-thumbs&n=13",
     geography:
       "Dominated by dense rainforests and numerous rivers, it is the largest region in Cameroon. The region has a tropical climate with significant rainfall.",
     culture:
@@ -352,6 +358,8 @@ export const regionsInfo = [
   {
     region: "Far North",
     capital: "Maroua",
+    image:
+      "https://avatars.mds.yandex.net/i?id=e0c03211f39e114e8c32fc4140f083aefd7e3230-5879159-images-thumbs&n=13",
     geography:
       "Features semi-arid landscapes, including parts of the Sahel and savanna. The region also contains the Mandara Mountains and Lake Chad.",
     culture:
@@ -364,6 +372,8 @@ export const regionsInfo = [
   {
     region: "Littoral",
     capital: "Douala",
+    image:
+      "https://yandex-images.clstorage.net/4YRP9v202/26cbd4U1I/iXiCiB50kMQKUy-2IpYysvGyHlm8FP-C1p6CZWFYM6-7azEz-TobrTpKoyCz299nyrVV2yzGumyYJyQHjckVLJxEi5EveZyZeyYHwxOmLpbhzzIsnBXj856y3gglfSOe01sxImCDznG-sgahThoehu_xYK8h7uM9-UqU_-kcKJBFkNIIPixNyDIb6gbarpY6AcsqUezRlxeO-lfwPYmGVtaC1Kas98ZZ7kIyjULKXuoTFXAzbQfHpeE6sGqJeEDQyZCmgBKY6eQej2puUqK-Zj2X_qm0fUuTdl472HUtxra-KnhGUCuCFYKmojWuAloev-n8lyHDH9lhOkxOyeC0XBl8yuBaoEXEouNSGlZaTmal6xpdgCFrC06iSziBgf4qLvbAKsjfYhH6ntrFeqYS6gMdyH8pa1PplV4wPtnELEA9nJZ0ijjxcIpPIjrCuhI63TP-CeRhp7_mAgMk8Y1u0m4WYM5Qe6plBkYaVdIW9upL6QQrucffrcF61MrFeKjcgZSaDJIgvdCCRzoCWjaCFvkL-ul8-d8rrvaHdDnhxrZ-_kSKtKeGsR6qqnHGjgqyr31wJ9Ufs7mt7kAiOWBYnJ2EZkguFJmUpqtyihI6rhJN6-pdQNlrl-IS84jt9VbqJnow3tSnbkUCDvLFwgKauiuxcOMRwwONBdq03kk05PCxgE5UUlgdYB7z_sqadsKaMZMyVRCl72sKkqukgcG64kL2bEa09_pJ1l5-4fYusi6zaUzffbefkZHWgBKpEDy43ZCy6Kq0ESya62YqfnqGet0TPlGQBZ8XOqKXsH1p3upaSsBOpKcq_R6uhkFeMn5qo1m83y0nT2GJ9ixi8XQUVLn45sQ-oGV4Om_mOvY-Avq5H3oBJO2P96YmW9AF3epGUv4UvnTLkk1uDubhXuYW-kNdyP9970eFhdr8YtGctMA57AoI0oDBFKJbMjpano7GSbNCSazx47tibp9IeR1E",
     geography:
       "Coastal region with significant maritime influence. It has a tropical climate with high humidity and significant rainfall.",
     culture:
@@ -376,6 +386,8 @@ export const regionsInfo = [
   {
     region: "North",
     capital: "Garoua",
+    image:
+      "https://avatars.mds.yandex.net/i?id=c6f691082733b64f062c7456605f87b14994420b-7546197-images-thumbs&n=13",
     geography:
       "Characterized by savannas and the Benue River valley. The region has a tropical climate with a distinct wet and dry season.",
     culture:
@@ -388,6 +400,8 @@ export const regionsInfo = [
   {
     region: "Northwest",
     capital: "Bamenda",
+    image:
+      "https://yandex-images.clstorage.net/4YRP9v202/26cbd4U1I/iXiCiB50kMQKUy-2IpYysvGyHlm8FP-C1p6CZWFMJ5b-KzUykSoC7Scf7nCKir4z2-1UrnWGmnCQLwwH3Ik9PdRF45EuGOn4IlcvuhayXpbtnj5lnASvnt__3-zdzeZ6FpK8ygDb8pEydqp9i762Ar8Jpb_11z_5dSq4JvlMRHjVqA5EJqBFGCZPUsrSxrqGpRfGfWihZ5sGGlsgqcXOKuamkMbQm55t1mY2MWKaLhrPLTDfkb9_dXVeMApN6GhUQShmzCqIGSR6m6qSfho-fgF77jXM4Yfzrra73HWBgkYCNigqGJ9qwSrqkn2mQlKaz9EUnwlL86WZMlBCdURI6C0QEsjSeBm8Bn9epiI6pkb9Cw7BYNkbY3IO10SBYYY-Ok7Y_rzXnn3e3np1Dg5ibqutZI8t0--BeW7Eku3w_MCBYDJcMiRFxN6bCsJi9hLuXUMSsWxJ4yOSrjPcJanywuKOSFYMM541KhIu5aKCJjqPSZCTkVdzPXFivIr1vFzIiXgKxL60aeDmn-pa-o6GpqnHQnkA4Yczeop3OPmFJtoOPmxClM_G0b5mIol67jJWG914b4mnMyFhnvg2wZgY7GUwgoyymG1UBo9eZto6OupNs76tFHHba_7-I1j5bdLGqmbYRhhfzlVyZuZNpl4G_i8phB_dG18NZbbkSo0c7FQ9vMIE_vTlKH5XVjamvsYCzeuSwSCd0w9yors4qfneEvrq_HI0d1rNqlraIdLCGmojHUj_-cMXYXVKWLJhEKDQJSQi4PKwBcT-W1K2Bs66Mv3Xhj2I-dsXzg6zKPkpatoKElzaKLse3Zqq2nFCEupyA7E4p53r-wUdHnQmdWT0cKGkMmi2NIWg8h8CAu7eWq55G-ZFPM13H3raQ_iVkdqqqnL82vzTjj2e3vohihoOfi9hOId1S2-FCfK4ylXAmOiVcDLEFri5UF4nSoryshZqMd9-Ofxhj--eWouIgSHA",
     geography:
       "Mountainous terrain with cooler temperatures compared to the rest of the country. The region also features fertile highlands and scenic landscapes.",
     culture:
@@ -400,6 +414,8 @@ export const regionsInfo = [
   {
     region: "South",
     capital: "Ebolowa",
+    image:
+      "https://avatars.mds.yandex.net/i?id=6068b75aebf864b304cf3b72bdc22a44-4600603-images-thumbs&n=13",
     geography:
       "Lush rainforests and coastal plains with a humid tropical climate. The region has numerous rivers and biodiversity hotspots.",
     culture:
@@ -412,6 +428,8 @@ export const regionsInfo = [
   {
     region: "Southwest",
     capital: "Buea",
+    image:
+      "https://avatars.mds.yandex.net/i?id=276d951687cf6efca23fff867eff27eea3ccd741-9882580-images-thumbs&n=13",
     geography:
       "Volcanic mountains, coastal plains, and rainforests. The region is home to Mount Cameroon, the highest peak in West Africa.",
     culture:
@@ -424,6 +442,8 @@ export const regionsInfo = [
   {
     region: "West",
     capital: "Bafoussam",
+    image:
+      "https://avatars.mds.yandex.net/i?id=75581a6f30fe3f294100687c9c771bc450503f94-6257657-images-thumbs&n=13",
     geography:
       "Mountainous and hilly terrain with fertile volcanic soils. The region has a moderate climate and rich vegetation.",
     culture:
@@ -678,6 +698,8 @@ export const tourInfo = [
   "Kribi",
   "Bafut Palace",
   "Ngoyla-Mintom Forest",
+  "Limbe Wildlife Center",
+  "Limbe Botanical Garden",
 ];
 
 export const airportInfor = [
@@ -694,3 +716,230 @@ export const airportInfor = [
 ];
 
 export const travelModeInfo = ["Alone", "Couple", "Family", "Group"];
+
+export const tourAttractionsInfo = [
+  {
+    name: "Mount Cameroon National Park",
+    attractions: [
+      "Hiking trails",
+      "Volcanic landscapes",
+      "Bird watching",
+      "Rich biodiversity",
+    ],
+    duration: "2 days",
+    price2Persons: 300,
+    price3Persons: 450,
+    startLocation: "Buea",
+    endLocation: "Buea",
+    image:
+      "https://geosfera.info/wp-content/uploads/2023/03/Mount-Cameroon.webp",
+  },
+  {
+    name: "Wazaa National Park",
+    attractions: [
+      "Safari tours",
+      "Elephant sightings",
+      "Bird watching",
+      "Diverse wildlife",
+    ],
+    duration: "1 day",
+    price2Persons: 200,
+    price3Persons: 300,
+    startLocation: "Garoua",
+    endLocation: "Garoua",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Bain_des_%C3%A9l%C3%A9phants%2C_parc_de_Waza%2C_Nord_Cameroun_%2825963018142%29.jpg/640px-Bain_des_%C3%A9l%C3%A9phants%2C_parc_de_Waza%2C_Nord_Cameroun_%2825963018142%29.jpg",
+  },
+  {
+    name: "Korup National Park",
+    attractions: [
+      "Pristine rainforest",
+      "Wildlife research",
+      "Bird watching",
+      "Hiking trails",
+    ],
+    duration: "3 days",
+    price2Persons: 400,
+    price3Persons: 600,
+    startLocation: "Mundemba",
+    endLocation: "Mundemba",
+    image:
+      "https://yandex-images.clstorage.net/4YRP9v202/26cbd4U1I/iXiCiB50kMQKUy-2IpYysvGyHlm8FP-C1p6CZXgYAuOrdxU2iT4DuT8KomCL0_dj1qFV2nzH3niRcmQTjIkhPdRAl4kvbYipbwov13K2Pqb5x2tV-GWXk6L3iylUDC4OFqrw5mDDglGq6gIN7r6qKurNVIMBcyYxBSaMylmIoFCdsLLUQrRVYALf-mpenjrmcYeWReiBI7tqXjcsjemqwmKi2LaQ965deqpu8QquNmYD6cybcVezUWFOzEZZ_Ch8KRSe-NY0PegO96ZWAkrCvt1bEr1M7Qvzzh7XRCVFSj6-5pTadGcWsbKuml32IpIqxzGwG3GrlxH5ukCWtZBINBG4vkS6DEns9gemzn6uNoqBe4qFsJ3rB2ImS9T5_SamSgaQokwf5mUW5m7hAhZ6Im99gO8V1-cB3SJcslXM3OSJDApsFnxpeBZb-ramSmLuwbc-LRDV93dutrOUGV3CPu7O5F6U33bNpgJuqfbaLrLD8cS7MTMTHWGmwA5dwKT8kUCqZB5kUeCay9aSnk6CdlnPqmXkUae_Ah7XhPF5htoy4jBGeG9S2T7-Nk1iriLeG53Q16Wn--F5VoASTTzgQKVk7kDyLNmolufSJn5eNkp5exYpACVbaxaOi9x1DdK6MgrEWtw35t2ybj7Jrq7mGsct5H-RUweRLersPkkU_Dzp4Br4qqCZINqLWloGhj4aBf_qwYB9dwciYoO4-VFK2mKeyI6Mu8LpnkaqUXaS2nazsfjrnWfLcQkypFJZ6EDEBexWfLI4ecTWz7q2hoo6mqWPlvGwQWP7igaLoEX9QsoyTnxGfENiQYKK7kFGYtomI2EI873LuyltGkg2MbxsUBGYAtw2uGlMkks60orOai5Nn3ZtNI0Dgz4yJ6jxKbIaXvbMNtwjwkFW4n6hQhb6dutp7P-RG7sJhbrctiVQoLwxPG5EAmxp4DLHBiIm9iKmUfM6qXxJm__-nt9YFal4",
+  },
+  {
+    name: "Dja Faunal Reserve",
+    attractions: [
+      "UNESCO World Heritage site",
+      "Biodiversity hotspot",
+      "Primate observation",
+      "Nature trails",
+    ],
+    duration: "2 days",
+    price2Persons: 350,
+    price3Persons: 525,
+    startLocation: "Sangmelima",
+    endLocation: "Sangmelima",
+    image:
+      "https://i.pinimg.com/736x/84/83/30/8483303a74d8d303358eb88c71214221.jpg",
+  },
+  {
+    name: "Bonoue National Park",
+    attractions: [
+      "River tours",
+      "Fishing",
+      "Wildlife observation",
+      "Scenic landscapes",
+    ],
+    duration: "1 day",
+    price2Persons: 250,
+    price3Persons: 375,
+    startLocation: "Garoua",
+    endLocation: "Garoua",
+    image:
+      "https://yoooper.com/wp-content/uploads/2022/09/PARC-DE-LA-BENOUE-e1662559687147.jpg",
+  },
+  {
+    name: "Campo Ma'an National Park",
+    attractions: [
+      "Gorilla tracking",
+      "Pristine beaches",
+      "Mangrove forests",
+      "Diverse wildlife",
+    ],
+    duration: "2 days",
+    price2Persons: 380,
+    price3Persons: 570,
+    startLocation: "Kribi",
+    endLocation: "Kribi",
+    image:
+      "https://discover-cameroon.com/wp-content/uploads/2018/02/Lobe-New-WEB-gros-3-1280x780.jpg",
+  },
+  {
+    name: "Limbe Botanical Garden",
+    attractions: [
+      "Exotic plants",
+      "Guided tours",
+      "Bird watching",
+      "Scenic picnic spots",
+    ],
+    duration: "1 day",
+    price2Persons: 150,
+    price3Persons: 225,
+    startLocation: "Limbe",
+    endLocation: "Limbe",
+    image:
+      "https://www.globeholidays.net/Africa/Cameroon/Media/Limbe_Botanic_Garden.jpg",
+  },
+  {
+    name: "Limbe Wildlife Center",
+    attractions: [
+      "Primate sanctuary",
+      "Educational tours",
+      "Wildlife conservation",
+      "Close encounters with animals",
+    ],
+    duration: "1 day",
+    price2Persons: 180,
+    price3Persons: 270,
+    startLocation: "Limbe",
+    endLocation: "Limbe",
+    image:
+      "https://avatars.mds.yandex.net/i?id=4fa75349a67fb4aeec58e96843a1a1f9e136e60e-10591076-images-thumbs&n=13",
+  },
+  {
+    name: "Ekam Nkam Waterfalls",
+    attractions: [
+      "Waterfall viewing",
+      "Nature photography",
+      "Hiking",
+      "Picnicking",
+    ],
+    duration: "1 day",
+    price2Persons: 120,
+    price3Persons: 180,
+    startLocation: "Douala",
+    endLocation: "Douala",
+    image:
+      "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/63/a1/9b/caption.jpg?w=1200&h=-1&s=1",
+  },
+  {
+    name: "Foumban Royal Palace and Museum",
+    attractions: [
+      "Historical artifacts",
+      "Cultural exhibits",
+      "Royal architecture",
+      "Guided tours",
+    ],
+    duration: "1 day",
+    price2Persons: 200,
+    price3Persons: 300,
+    startLocation: "Foumban",
+    endLocation: "Foumban",
+    image:
+      "https://avatars.mds.yandex.net/i?id=a7f1f3e9357cc404a54a1f99b7f149303b33c481-9221733-images-thumbs&n=13",
+  },
+  {
+    name: "Mefou National Park",
+    attractions: [
+      "Primate sanctuary",
+      "Educational tours",
+      "Nature trails",
+      "Wildlife conservation",
+    ],
+    duration: "1 day",
+    price2Persons: 160,
+    price3Persons: 240,
+    startLocation: "Yaoundé",
+    endLocation: "Yaoundé",
+    image:
+      "https://media.tacdn.com/media/attractions-splice-spp-674x446/06/6e/c6/f9.jpg",
+  },
+  {
+    name: "Kribi",
+    attractions: [
+      "Pristine beaches",
+      "Seafood restaurants",
+      "Water sports",
+      "Boat tours",
+    ],
+    duration: "1 day",
+    price2Persons: 180,
+    price3Persons: 270,
+    startLocation: "Kribi",
+    endLocation: "Kribi",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Lobe_Waterfalls.jpg/1600px-Lobe_Waterfalls.jpg",
+  },
+  {
+    name: "Bafut Palace",
+    attractions: [
+      "Historical significance",
+      "Cultural performances",
+      "Museum exhibits",
+      "Traditional architecture",
+    ],
+    duration: "1 day",
+    price2Persons: 190,
+    price3Persons: 285,
+    startLocation: "Bafut",
+    endLocation: "Bafut",
+    image:
+      "https://yandex-images.clstorage.net/4YRP9v202/26cbd4U1I/iXiCiB50kMQKUy-2IpYysvGyHlm8FP-C1p6CZXgsBv7_fzRjyT9PpS5D5nHnxr470-VUqzjb0zykJw1HpJktIIk124EveZShawYH2yemLpbhzzIsnBXj856y3gglfSOe01sxImCDznG-sgahThoehu_xYK8h7uM9-UqU_-kcKJBFkNIIPixNyDIb6gbarpY6AcsqUezRlxeO-lfwPYmGVtaC1Kas98ZZ7kIyjULKXuoTFXAzbQfHpeE6sGqJeEDQyZCmgBKY6eQej2puUqK-Zj2X_qm0fUuTdl472HUtxra-KnhGUCuCFYKmojWuAloev-n8lyHDH9lhOkxOyeC0XBl8yuBaoEXEouNSGlZaTmal6xpdgCFrC06iSziBgf4qLvbAKsjfYhH6ntrFeqYS6gMdyH8pa1PplV4wPtnELEA9nJZ0ijjxcIpPIjrCuhI63TP-CeRhp7_mAgMk8Y1u0m4WYM5Qe6plBkYaVdIW9upL6QQrucffrcF61MrFeKjcgZSaDJIgvdCCRzoCWjaCFvkL-ul8-d8rrvaHdDnhxrZ-_kSKtKeGsR6qqnHGjgqyr31wJ9Ufs7mt7kAiOWBYnJ2EZkguFJmUpqtyihI6rhJN6-pdQNlrl-IS84jt9VbqJnow3tSnbkUCDvLFwgKauiuxcOMRwwONBdq03kk05PCxgE5UUlgdYB7z_sqadsKaMZMyVRCl72sKkqukgcG64kL2bEa09_pJ1l5-4fYusi6zaUzffbefkZHWgBKpEDy43ZCy6Kq0ESya62YqfnqGet0TPlGQBZ8XOqKXsH1p3upaSsBOpKcq_R6uhkFeMn5qo1m83y0nT2GJ9ixi8XQUVLn45sQ-oGV4Om_mOvY-Avq5H3oBJO2P96YmW9AF3epGUv4UvnTLkk1uDubhXuYW-kNdyP9970eFhdr8YtGctMA57AoI0oDBFKJbMjpano7GSbNCSazx47tibp9IeR1E",
+  },
+  {
+    name: "Ngoyla-Mintom Forest",
+    attractions: [
+      "Untouched rainforest",
+      "Biodiversity exploration",
+      "Bird watching",
+      "Eco-tours",
+    ],
+    image:
+      "https://dtnac4dfluyw8.cloudfront.net/img/congo_bassin_forest_1_38505.jpg",
+    duration: "2 days",
+    price2Persons: 320,
+    price3Persons: 480,
+    startLocation: "Mintom",
+    endLocation: "Mintom",
+  },
+];

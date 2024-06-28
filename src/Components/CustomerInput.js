@@ -1,4 +1,6 @@
+import React from "react";
 import { Field } from "formik";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 export default function CustomInput({
   id,
@@ -12,6 +14,8 @@ export default function CustomInput({
   as,
   children,
   row,
+  togglePassword,
+  showPassword,
 }) {
   const inputProps = {
     id,
@@ -26,15 +30,15 @@ export default function CustomInput({
   };
 
   return (
-    <div className="sm:col-span-4">
+    <div className="sm:col-span-4 relative">
       <label
         htmlFor={id}
-        className="block text-sm font-medium leading-6 text-gray-900"
+        className="block text-lg font-medium leading-6 text-gray-800"
       >
         {label}
       </label>
       <div className="mt-2">
-        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-800 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md relative">
           {as === "select" ? (
             <Field as="select" {...inputProps}>
               {children}
@@ -43,6 +47,19 @@ export default function CustomInput({
             <Field as="textarea" {...inputProps} rows={row || 3} />
           ) : (
             <Field type={type} {...inputProps} />
+          )}
+          {name === "password" && value && (
+            <button
+              type="button"
+              onClick={togglePassword}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+            >
+              {showPassword ? (
+                <EyeSlashIcon className="h-6 w-6" aria-hidden="true" />
+              ) : (
+                <EyeIcon className="h-6 w-6" aria-hidden="true" />
+              )}
+            </button>
           )}
         </div>
       </div>

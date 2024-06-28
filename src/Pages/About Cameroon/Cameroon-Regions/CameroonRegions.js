@@ -4,29 +4,33 @@ import { regionsInfo } from "../../../Components/Data/data";
 export default function CameroonRegions() {
   return (
     <div className="mt-10 mx-20 px-20">
-      <h1>Cameroon's Regions</h1>
+      <h1 className="text-gray-800 text-center text-4xl font-bold">
+        Cameroon's <span className="text-red-500">Regions</span>
+      </h1>
 
       <div>
         {regionsInfo.map((region, index) => (
-          <div key={index}>
-            <h2>
-              {" "}
-              {index + 1} {region.region}
+          <div key={index} className="my-8 text-lg">
+            <h2 className="text-2xl font-medium text-gray-800">
+              {index + 1} {region.region} ({region.capital})
             </h2>
+            <img
+              src={region.image}
+              alt={region.capital}
+              className="my-4"
+              style={{ width: "70rem", height: "25rem" }}
+            />
             <p>
-              <strong>Capital:</strong> {region.capital}
+              <strong className="text-gray-800">Geography:</strong> {region.geography}
             </p>
             <p>
-              <strong>Geography:</strong> {region.geography}
+              <strong className="text-gray-800">Culture:</strong> {region.culture}
             </p>
             <p>
-              <strong>Culture:</strong> {region.culture}
+              <strong className="text-gray-800">Economy:</strong> {region.economy}
             </p>
             <p>
-              <strong>Economy:</strong> {region.economy}
-            </p>
-            <p>
-              <strong>Tourism:</strong> {region.tourism}
+              <strong className="text-gray-800">Tourism:</strong> {region.tourism}
             </p>
           </div>
         ))}
