@@ -61,3 +61,19 @@ export const AppRoutes = [
     element: <SingleTour />,
   },
 ];
+
+export const AdminRoutes = [
+  {
+    path: "/admin/dashboard/home",
+    index: true,
+    element: <Home />,
+  },
+  {
+    path: "/admin/dashboard/home",
+    element: <Home />,
+  },
+  {
+    path: "/admin/sign-in",
+    element: <AuthPage />,
+  },
+];

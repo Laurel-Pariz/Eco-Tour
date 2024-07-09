@@ -1,11 +1,5 @@
 import React, { useReducer, useEffect, useContext } from "react";
-import {
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  updateProfile,
-} from "firebase/auth";
-import { auth } from "../Configs/firebase";
+import { supabase, supabaseAuth } from "../Configs/supabase"; // Adjust the import path as needed
 
 export const CONSTANTS = {
   SIGN_UP: "SIGN_UP",
@@ -58,37 +52,77 @@ export const AppReducer = (state, action) => {
 
 export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, defaultAppState);
+  const [session, setSession] = React.useState(null);
 
   useEffect(() => {
-    const subscribed = onAuthStateChanged(auth, (user) => {
-      if (user) {
+    const {data} = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("Event: ", event);
+      console.log("Session: ", session);
+      if (
+        event === CONSTANTS.SIGN_IN ||
+        event === CONSTANTS.SIGN_UP ||
+        session
+      ) {
+        setSession(session);
         dispatch({
           type: CONSTANTS.SET_USER,
-          payload: { user },
+          payload: { user: session },
         });
-      } else {
+      } else if (event === CONSTANTS.SIGN_OUT) {
+        setSession(null);
         dispatch({
           type: CONSTANTS.SIGN_OUT,
         });
       }
     });
-    return () => subscribed;
+    return () => {
+      data.subscription.unsubscribe();
+    };
   }, []);
 
-  const signUpHandler = async (email, password, firstName, lastName) => {
+  const signUpHandler = async (
+    email,
+    password,
+    firstName,
+    lastName,
+    role,
+    phone,
+    redirectLink
+  ) => {
     try {
-      const userCredentials = await createUserWithEmailAndPassword(
-        auth,
+      const { data, session, error } = await supabaseAuth.signUp({
         email,
-        password
-      );
-      await updateProfile(userCredentials.user, {
-        displayName: `${firstName} ${lastName}`,
+        password,
+        options: {
+          data: {
+            firstName,
+            lastName,
+            role,
+            email_verified: false,
+            phone,
+            user: {
+              phone,
+            },
+            user_metadata: {
+              role,
+              email_verified: false,
+              phone_verified: false,
+              phone,
+            },
+            redirectTo: redirectLink,
+          },
+        },
       });
+
+      if (error) {
+        throw error;
+      }
+
       dispatch({
         type: CONSTANTS.SIGN_UP,
-        payload: { user: userCredentials.user },
+        payload: { user: data.user },
       });
+      return { user: data };
     } catch (error) {
       dispatch({
         type: CONSTANTS.ERROR,
@@ -100,15 +134,20 @@ export const AppProvider = ({ children }) => {
 
   const signInHandler = async (email, password) => {
     try {
-      const userCredentials = await signInWithEmailAndPassword(
-        auth,
+      const { data, error } = await supabaseAuth.signInWithPassword({
         email,
-        password
-      );
+        password,
+      });
+
+      if (error) {
+        throw error;
+      }
+
       dispatch({
         type: CONSTANTS.SIGN_IN,
-        payload: { user: userCredentials.user },
+        payload: { user: data.user },
       });
+      return { user: data.user };
     } catch (error) {
       dispatch({
         type: CONSTANTS.ERROR,
@@ -120,7 +159,10 @@ export const AppProvider = ({ children }) => {
 
   const signOutHandler = async () => {
     try {
-      await auth.signOut();
+      const { error } = await supabaseAuth.signOut();
+      if (error) {
+        throw error;
+      }
       dispatch({
         type: CONSTANTS.SIGN_OUT,
       });
@@ -134,7 +176,7 @@ export const AppProvider = ({ children }) => {
   };
 
   const value = {
-    user: state.user,
+    user: session,
     error: state.error,
     signInHandler,
     signOutHandler,
