@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 export default function Home() {
   const { user } = AppState();
   console.log("userInformation: ", user);
+  console.log("userId: ", user?.user.id);
+  console.log("user-role: ", user?.user.role);
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -24,7 +26,9 @@ export default function Home() {
 
         <hr className="my-4" />
 
-        <h1 className="text-gray-900 uppercase text-2xl font-medium">Heritage Sites</h1>
+        <h1 className="text-gray-900 uppercase text-2xl font-medium">
+          Heritage Sites
+        </h1>
 
         <p className="text-gray-900 text-lg">
           Cameroon is one of the older countries of Africa and therefore has a
