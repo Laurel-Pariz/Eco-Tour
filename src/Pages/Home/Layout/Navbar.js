@@ -8,24 +8,53 @@ import {
   MenuItems,
   Transition,
 } from "@headlessui/react";
-import {
-  Bars3Icon,
-  XMarkIcon,
-  UserIcon,
-} from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon, UserIcon } from "@heroicons/react/24/outline";
 import { NavLink } from "react-router-dom";
 import { AppState } from "../../../Store/context";
 
-export const navigation = [
-  { name: "Home", href: "/home", current: true },
-  { name: "Our Tours", href: "our-tours", current: false },
-  { name: "Regions", href: "cameroon-regions", current: false },
-  { name: "Culture", href: "culture-language-religion", current: false },
-  { name: "Visa / Safety", href: "visa-health-safety", current: false },
-  { name: "Information", href: "general-information", current: false },
-  { name: "About", href: "about-us", current: false },
-  { name: "Booking Form", href: "booking-form", current: false },
-];
+export const navigation = (userRole) =>
+  [
+    {
+      name: userRole === "admin" ? "Dashboard" : "Home",
+      href: userRole === "admin" ? "/admin/dashboard/home" : "/home",
+      current: false,
+    },
+    userRole !== "admin" && {
+      name: "Our Tours",
+      href: "our-tours",
+      current: false,
+    },
+    userRole !== "admin" && {
+      name: "Regions",
+      href: "cameroon-regions",
+      current: false,
+    },
+    userRole !== "admin" && {
+      name: "Culture",
+      href: "culture-language-religion",
+      current: false,
+    },
+    userRole !== "admin" && {
+      name: "Visa / Safety",
+      href: "visa-health-safety",
+      current: false,
+    },
+    userRole !== "admin" && {
+      name: "Information",
+      href: "general-information",
+      current: false,
+    },
+    userRole !== "admin" && {
+      name: "About",
+      href: "about-us",
+      current: false,
+    },
+    userRole !== "admin" && {
+      name: "Booking Form",
+      href: "booking-form",
+      current: false,
+    },
+  ].filter(Boolean);
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -34,6 +63,9 @@ function classNames(...classes) {
 export default function Example() {
   const { user, signOutHandler } = AppState();
 
+  const userRole = user?.user.user_metadata.role;
+  console.log("see user role: ", userRole);
+
   const handleSignOut = async () => {
     try {
       await signOutHandler();
@@ -41,6 +73,8 @@ export default function Example() {
       throw new Error("Error signing out, please try agin");
     }
   };
+
+  const navRoutes = navigation(userRole);
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -62,7 +96,9 @@ export default function Example() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <NavLink to="/">
+                  <NavLink
+                    to={userRole === "admin" ? "/admin/dashboard/home" : "/"}
+                  >
                     <span className="text-lg font-medium text-white">
                       Eco-Tourism
                     </span>
@@ -70,7 +106,7 @@ export default function Example() {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
+                    {navRoutes.map((item) => (
                       <NavLink
                         key={item.name}
                         to={item.href}
@@ -91,66 +127,75 @@ export default function Example() {
 
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {/* Profile dropdown */}
-                <Menu as="div" className="relative ml-3">
-                  <div>
-                    <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                      <span className="absolute -inset-1.5" />
-                      <span className="sr-only">Open user menu</span>
-                      {user ? (
-                        <UserIcon className="h-8 w-8 text-white" />
-                      ) : (
-                        <NavLink
-                          to="sign-in"
-                          className=" bg-gray-800 ml-4 rounded-md block px-4 py-2 text-lg font-medium text-white"
-                        >
-                          Log In
-                        </NavLink>
-                      )}
-                    </MenuButton>
-                  </div>
-                  <Transition
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
+
+                {userRole === "admin" ? (
+                  <button
+                    onClick={handleSignOut}
+                    type="button"
+                    className="text-medium text-white text-xl"
                   >
-                    <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <MenuItem>
-                        {({ focus }) => (
-                          <NavLink
-                            to="booked-tours"
-                            className={classNames(
-                              focus ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-lg font-medium text-gray-800"
-                            )}
-                          >
-                            Booked Tours
-                          </NavLink>
-                        )}
-                      </MenuItem>
-                      <MenuItem>
-                        {({ focus }) => (
-                          <button
-                            onClick={handleSignOut}
-                            type="button"
-                            className=" bg-gray-800 ml-4 rounded-md block px-4 py-2 text-lg font-medium text-white"
-                          >
-                            Sign out
-                          </button>
-                        )}
-                      </MenuItem>
-                    </MenuItems>
-                  </Transition>
-                </Menu>
+                    Sign Out
+                  </button>
+                ) : user ? (
+                  <Menu as="div" className="relative ml-3">
+                    <div>
+                      <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                        <span className="absolute -inset-1.5" />
+                        <span className="sr-only">Open user menu</span>
+                        <UserIcon className="h-8 w-8 text-white" />
+                      </MenuButton>
+                    </div>
+                    <Transition
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <MenuItem>
+                          {({ focus }) => (
+                            <NavLink
+                              to="booked-tours"
+                              className={classNames(
+                                focus ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-lg font-medium text-gray-800"
+                              )}
+                            >
+                              Booked Tours
+                            </NavLink>
+                          )}
+                        </MenuItem>
+                        <MenuItem>
+                          {({ focus }) => (
+                            <button
+                              onClick={handleSignOut}
+                              type="button"
+                              className=" bg-gray-800 ml-4 rounded-md block px-4 py-2 text-lg font-medium text-white"
+                            >
+                              Sign out
+                            </button>
+                          )}
+                        </MenuItem>
+                      </MenuItems>
+                    </Transition>
+                  </Menu>
+                ) : (
+                  <NavLink
+                    to="sign-in"
+                    className=" bg-gray-800 ml-4 rounded-md block px-4 py-2 text-lg font-medium text-white"
+                  >
+                    Log In
+                  </NavLink>
+                )}
               </div>
             </div>
           </div>
 
           <DisclosurePanel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
+              {navigation(userRole).map((item) => (
                 <DisclosureButton
                   key={item.name}
                   as="a"
