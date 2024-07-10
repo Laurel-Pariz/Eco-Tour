@@ -10,7 +10,6 @@ import {
 } from "@headlessui/react";
 import {
   Bars3Icon,
-  BellIcon,
   XMarkIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";

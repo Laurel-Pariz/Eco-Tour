@@ -1,3 +1,3 @@
-import { AppRoutes } from "./routes";
+import { AdminRoutes, AppRoutes } from "./routes";
 
-export const IndexRoutes = [...AppRoutes];
+export const IndexRoutes = [...AppRoutes, ...AdminRoutes];

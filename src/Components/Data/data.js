@@ -1,3 +1,5 @@
+import { supabase } from "../../Configs/supabase";
+
 export const discoverCameroon = [
   {
     image:
@@ -684,23 +686,90 @@ export const travelInfo = [
   },
 ];
 
-export const tourInfo = [
-  "Mount Cameroon National Park",
-  "Wazaa National Park",
-  "Korup National Park",
-  "Dja Faunal Reserve",
-  "Bonoue National Park",
-  "Campo Ma'an National Park",
-  "Limbe Bortanical Gardens",
-  "Ekam Nkam Waterfalls",
-  "Foumban Royal Palace and Museum",
-  "Mefou National Park",
-  "Kribi",
-  "Bafut Palace",
-  "Ngoyla-Mintom Forest",
-  "Limbe Wildlife Center",
-  "Limbe Botanical Garden",
-];
+export const toursInfor = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("tours")
+      .insert([
+        {
+          tour: "Mount Cameroon National Park",
+          price_1: 450,
+          price_2: 300,
+        },
+        {
+          tour: "Wazaa National Park",
+          price_1: 300,
+          price_2: 200,
+        },
+        {
+          tour: "Korup National Park",
+          price_1: 600,
+          price_2: 400,
+        },
+        {
+          tour: "Dja Faunal Reserve",
+          price_1: 525,
+          price_2: 350,
+        },
+        {
+          tour: "Bonoue National Park",
+          price_1: 375,
+          price_2: 250,
+        },
+        {
+          tour: "Campo Ma'an National Park",
+          price_1: 570,
+          price_2: 380,
+        },
+        {
+          tour: "Limbe Botanical Gardens",
+          price_1: 225,
+          price_2: 150,
+        },
+        {
+          tour: "Ekam Nkam Waterfalls",
+          price_1: 270,
+          price_2: 180,
+        },
+        {
+          tour: "Foumban Royal Palace and Museum",
+          price_1: 180,
+          price_2: 120,
+        },
+        {
+          tour: "Mefou National Park",
+          price_1: 240,
+          price_2: 160,
+        },
+        {
+          tour: "Kribi",
+          price_1: 270,
+          price_2: 180,
+        },
+        {
+          tour: "Bafut Palace",
+          price_1: 285,
+          price_2: 195,
+        },
+        {
+          tour: "Ngoyla-Mintom Forest",
+          price_1: 480,
+          price_2: 320,
+        },
+        {
+          tour: "Limbe Wildlife Center",
+          price_1: 270,
+          price_2: 180,
+        },
+      ])
+      .select();
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 
 export const airportInfor = [
   "Douala International Airport (DLA)",
