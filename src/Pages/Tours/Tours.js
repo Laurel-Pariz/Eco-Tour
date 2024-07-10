@@ -88,14 +88,14 @@ export default function Tours() {
                 Duration: <span className="text-red-500">{site.duration}</span>
               </p>
               <p className="my-2">
-                Price:{" "}
+                Price per 2 persons:{" "}
                 <span className="text-red-500">
                   {formatMoney(site.price3Persons, "USD")} /{" "}
                   {formatMoney(convertUSDtoXOF(site.price3Persons), "XOF")}
                 </span>
               </p>
               <p className="my-2">
-                Price:{" "}
+                Price per 3 persons:{" "}
                 <span className="text-red-500">
                   {formatMoney(site.price2Persons, "USD")} /{" "}
                   {formatMoney(convertUSDtoXOF(site.price2Persons), "XOF")}

@@ -55,7 +55,7 @@ export const AppProvider = ({ children }) => {
   const [session, setSession] = React.useState(null);
 
   useEffect(() => {
-    const {data} = supabase.auth.onAuthStateChange((event, session) => {
+    const { data } = supabase.auth.onAuthStateChange((event, session) => {
       console.log("Event: ", event);
       console.log("Session: ", session);
       if (
@@ -90,7 +90,7 @@ export const AppProvider = ({ children }) => {
     redirectLink
   ) => {
     try {
-      const { data, session, error } = await supabaseAuth.signUp({
+      const { data, error } = await supabaseAuth.signUp({
         email,
         password,
         options: {
@@ -122,7 +122,7 @@ export const AppProvider = ({ children }) => {
         type: CONSTANTS.SIGN_UP,
         payload: { user: data.user },
       });
-      return { user: data };
+      return { user: data.user };
     } catch (error) {
       dispatch({
         type: CONSTANTS.ERROR,

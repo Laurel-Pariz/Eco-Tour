@@ -45,14 +45,11 @@ const createAdminProfile = async (user, profile) => {
 };
 
 export default function AuthPage() {
-  const { signInHandler, signUpHandler, user } = AppState();
+  const { signInHandler, signUpHandler } = AppState();
   const [authState, setAuthState] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-
-  console.log("auth page userId: ", user?.user.id);
-  const userId = user?.user.id;
 
   const handleAuthState = () => {
     setTimeout(() => {
@@ -64,15 +61,18 @@ export default function AuthPage() {
     const role = location.pathname === "/admin/sign-in" ? "admin" : "user";
     const redirectTo = role === "admin" ? "/admin/dashboard/home" : "/";
     try {
-      await signUpHandler(
+      const { user } = await signUpHandler(
         values.email,
         values.password,
         values.firstName,
         values.lastName,
         role,
-        values.phone
+        values.phone,
+        redirectTo
       );
-
+      const { id } = user;
+      console.log("auth page userId: ", id);
+      console.log("auth page userId: ");
       alert("Success!!");
 
       actions.resetForm({
@@ -85,33 +85,24 @@ export default function AuthPage() {
         },
       });
       navigate(redirectTo);
+
       try {
-        // Create profile in appropriate table
-        const profile = {
-          userId: userId,
-          email: values.email,
-          firstName: values.firstName,
-          lastName: values.lastName,
-          phone: values.phone,
-          role: role,
+        const userData = {
+          id,
+          name: `${values.firstName} ${values.lastName}`,
+          user,
         };
 
         if (role === "admin") {
-          const { error } = await supabase.from("adminProfiles").insert({
-            id: userId,
-            name: `${values.firstName} ${values.lastName}`,
-            user: user,
-          });
+          const { error } = await supabase
+            .from("adminProfiles")
+            .insert(userData);
           if (error) throw error;
           alert("success to admin database");
         } else {
-          const { error } = await supabase.from("userProfiles").insert([
-            {
-              id: userId,
-              name: `${values.firstName} ${values.lastName}`,
-              user: user,
-            },
-          ]);
+          const { error } = await supabase
+            .from("userProfiles")
+            .insert(userData);
           if (error) {
             alert(error.message);
             console.error(error.message);
