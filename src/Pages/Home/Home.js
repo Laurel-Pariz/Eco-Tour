@@ -7,7 +7,10 @@ import { UserIcon } from "@heroicons/react/24/outline";
 import { MdOutlineTour } from "react-icons/md";
 import { FaRegBookmark, FaArrowRight } from "react-icons/fa";
 import { useQuery } from "react-query";
-import { fetchUserProfiles } from "../../Services/adminServices";
+import {
+  EcoToursBookedTours,
+  fetchUserProfiles,
+} from "../../Services/adminServices";
 import { ToursInforServices } from "../../Services/service";
 import { useState } from "react";
 import { supabase } from "../../Configs/supabase";
@@ -41,6 +44,23 @@ function formatMoney(amount, currency) {
 function convertUSDtoXOF(amountInUSD) {
   const exchangeRate = 605;
   return amountInUSD * exchangeRate;
+}
+
+function adjustDateFormat(dateString) {
+  // Create a new date object from the date string
+  const date = new Date(dateString);
+
+  // Extract the components of the date
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = String(date.getFullYear()).slice(2);
+  const hour = String(date.getHours()).padStart(2, "0");
+  const minute = String(date.getMinutes()).padStart(2, "0");
+
+  // Format the date into the desired format
+  const formattedDate = `${day}/${month}/${year} ${hour}:${minute}`;
+
+  return formattedDate;
 }
 
 export default function Home() {
@@ -84,19 +104,246 @@ export default function Home() {
   } = useQuery("userProfiles", fetchUserProfiles);
   console.log("userProfiles: ", userProfiles);
 
+  const userId = userProfiles?.map((profiles) => {
+    const { id } = profiles;
+    return id;
+  });
+
   const {
     data: toursData = [],
     isLoading: toursLoading,
     error: toursError,
   } = useQuery("tours", ToursInforServices);
 
+  const {
+    data: bookedToursData,
+    isLoading: bookedToursLoading,
+    error: bookedToursError,
+  } = useQuery(["bookedTours", userId], () => EcoToursBookedTours(userId));
+
+  console.log("test booked tours service: ", bookedToursData);
+
+  const renderUserProfiles = () => {
+    if (isLoading) {
+      return (
+        <div className="flex bg-gray-100 p-4 m-4">
+          <table className="table-auto w-full bg-white rounded shadow">
+            <thead>
+              <tr>
+                <th className="px-4 py-2">Name</th>
+                <th className="px-4 py-2">Email</th>
+                <th className="px-4 py-2">Phone</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="flex justify-center text-gray-800 font-medium">
+                Loading...
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      );
+    } else if (error) {
+      return (
+        <div className="flex bg-gray-100 p-4 m-4">
+          <table className="table-auto w-full bg-white rounded shadow">
+            <thead>
+              <tr>
+                <th className="px-4 py-2">Name</th>
+                <th className="px-4 py-2">Email</th>
+                <th className="px-4 py-2">Phone</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="flex justify-center text-gray-800 font-medium">
+                {error.message}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      );
+    } else if (userProfiles.length === 0) {
+      return (
+        <div className="flex bg-gray-100 p-4 m-4">
+          <table className="table-auto w-full bg-white rounded shadow">
+            <thead>
+              <tr>
+                <th className="px-4 py-2">Name</th>
+                <th className="px-4 py-2">Email</th>
+                <th className="px-4 py-2">Phone</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="flex justify-center text-gray-800 font-medium">
+                No users in system
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      );
+    } else {
+      return (
+        <div className="flex bg-gray-100 p-4 m-4">
+          <table className="table-auto w-full bg-white rounded shadow">
+            <thead>
+              <tr>
+                <th className="px-4 py-2">Name</th>
+                <th className="px-4 py-2">Email</th>
+                <th className="px-4 py-2">Phone</th>
+              </tr>
+            </thead>
+            <tbody>
+              {userProfiles.map((userInfo) => {
+                const {
+                  id,
+                  name,
+                  user: {
+                    user_metadata: { email, phone },
+                  },
+                } = userInfo;
+
+                return (
+                  <tr key={id}>
+                    <td className="border px-4 py-2">{name}</td>
+                    <td className="border px-4 py-2">{email}</td>
+                    <td className="border px-4 py-2">
+                      {formatCameroonPhoneNumber(phone)}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      );
+    }
+  };
+
+  const renderUserBookedTours = () => {
+    if (bookedToursLoading) {
+      return <p>Loading booked tours</p>;
+    } else if (bookedToursError) {
+      return <p>{bookedToursError.message}</p>;
+    } else if (bookedToursData.length === 0) {
+      return <p>No booked tours</p>;
+    } else {
+      return bookedToursData?.map((bookedTours) => (
+        <div key={bookedTours.tour_id} className="flex bg-gray-100 p-4 m-4">
+          <table className="table-auto w-full bg-white rounded shadow">
+            <thead>
+              <tr>
+                <th className="px-4 py-2">Category</th>
+                <th className="px-4 py-2">Details</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              <tr>
+                <td className="px-4 py-2 font-semibold">Created at</td>
+                <td className="px-4 py-2">
+                  {adjustDateFormat(bookedTours.created_at)}
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-2 font-semibold">User Information</td>
+                <td className="px-4 py-2">
+                  <p>
+                    Name: {bookedTours.firstName} {bookedTours.lastName}
+                  </p>
+                  <p>Email: {bookedTours.email}</p>
+                  <p>Phone: {formatCameroonPhoneNumber(bookedTours.phone)}</p>
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-2 font-semibold">Tour Fee</td>
+                <td className="px-4 py-2">
+                  <p>
+                    Price: {formatMoney(bookedTours.price, "USD")} /{" "}
+                    {formatMoney(convertUSDtoXOF(bookedTours.price), "XOF")}
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td className="px-4 py-2 font-semibold">Tour Information</td>
+                <td className="px-4 py-2">
+                  <p>Country: {bookedTours.country}, {bookedTours.city}</p>
+                  <p>Tour selected: {bookedTours.selectTour}</p>
+                  <p>
+                    Date and time of arrival: {bookedTours.dateOfArrival}{" "}
+                    {bookedTours.timeOfArrival}
+                  </p>
+                  <p>Airport of arrival: {bookedTours.airportOfArrival}</p>
+                  <p>Travel Mode: {bookedTours.travelMode}</p>
+                  <p>
+                    Number of participants: {bookedTours.numberOfParticipants}
+                  </p>
+                  <p>Message: {bookedTours.message}</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ));
+    }
+  };
+
   const renderToursInformation = () => {
     if (toursLoading) {
-      return <p>Loading tours...</p>;
+      return (
+        <div className="flex bg-gray-100 p-4 m-4">
+          <table className="table-auto w-full bg-white rounded shadow">
+            <thead>
+              <tr>
+                <th className="px-4 py-2">Tours</th>
+                <th className="px-4 py-2">Price per 2 persons</th>
+                <th className="px-4 py-2">Price per 3 persons</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="flex justify-center text-gray-800 font-medium">
+                Loading tours...
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      );
     } else if (toursError) {
-      return <p>{toursError.message}</p>;
+      return (
+        <div className="flex bg-gray-100 p-4 m-4">
+          <table className="table-auto w-full bg-white rounded shadow">
+            <thead>
+              <tr>
+                <th className="px-4 py-2">Tours</th>
+                <th className="px-4 py-2">Price per 2 persons</th>
+                <th className="px-4 py-2">Price per 3 persons</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="flex justify-center text-gray-800 font-medium">
+                {toursError.message}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      );
     } else if (toursData.length === 0) {
-      return <p>No tours available, please add tours</p>;
+      return (
+        <div className="flex bg-gray-100 p-4 m-4">
+          <table className="table-auto w-full bg-white rounded shadow">
+            <thead>
+              <tr>
+                <th className="px-4 py-2">Tours</th>
+                <th className="px-4 py-2">Price per 2 persons</th>
+                <th className="px-4 py-2">Price per 3 persons</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="flex justify-center text-gray-800 font-medium">
+                No tours available, please add tours
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      );
     } else {
       return (
         <div className="flex bg-gray-100 p-4 m-4">
@@ -192,51 +439,6 @@ export default function Home() {
     }
   };
 
-  const renderUserProfiles = () => {
-    if (isLoading) {
-      return <p>Loading...</p>;
-    } else if (error) {
-      return <p>{error.message}</p>;
-    } else if (userProfiles.length === 0) {
-      return <p>No users in system</p>;
-    } else {
-      return (
-        <div className="flex bg-gray-100 p-4 m-4">
-          <table className="table-auto w-full bg-white rounded shadow">
-            <thead>
-              <tr>
-                <th className="px-4 py-2">Name</th>
-                <th className="px-4 py-2">Email</th>
-                <th className="px-4 py-2">Phone</th>
-              </tr>
-            </thead>
-            <tbody>
-              {userProfiles.map((userInfo) => {
-                const {
-                  id,
-                  name,
-                  user: {
-                    user_metadata: { email, phone },
-                  },
-                } = userInfo;
-
-                return (
-                  <tr key={id}>
-                    <td className="border px-4 py-2">{name}</td>
-                    <td className="border px-4 py-2">{email}</td>
-                    <td className="border px-4 py-2">
-                      {formatCameroonPhoneNumber(phone)}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      );
-    }
-  };
-
   const role = location.pathname.includes("admin/dashboard/home")
     ? "admin"
     : "user";
@@ -274,20 +476,37 @@ export default function Home() {
               </Sidebar.Items>
             </Sidebar>
           </div>
-          <div className="flex-1 p-4">
-            <p className="text-gray-800">Admin dashboard</p>
-            <h1>User Profiles</h1>
-            {renderUserProfiles()}
-            <h1>Tours</h1>
-            {renderToursInformation()}
-            {!isAdding && (
-              <button
-                onClick={handleAddTour}
-                className="bg-gray-800 text-white p-2 mt-2 font-medium rounded-md"
-              >
-                Add Tour
-              </button>
-            )}
+          <div className="flex-1 p-2">
+            <p className="text-gray-800 text-xl font-medium my-4">
+              Admin dashboard
+            </p>
+
+            <div>
+              <h1 className="text-gray-800 font-medium text-xl">
+                User Profiles
+              </h1>
+              {renderUserProfiles()}
+            </div>
+
+            <div>
+              <h1 className="text-gray-800 font-medium text-xl">
+                Booked Tours
+              </h1>
+              {renderUserBookedTours()}
+            </div>
+
+            <div>
+              <h1 className="text-gray-800 font-medium text-xl">Tours</h1>
+              {renderToursInformation()}
+              {!isAdding && (
+                <button
+                  onClick={handleAddTour}
+                  className="bg-gray-800 text-white p-2 mt-2 font-medium rounded-md"
+                >
+                  Add Tour
+                </button>
+              )}
+            </div>
           </div>
         </div>
       );
@@ -343,14 +562,7 @@ export default function Home() {
     }
   };
 
-  return (
-    <>
-      {homeContent()}
-
-      <p>User Email : {user?.email}</p>
-      <p>User Name : {user?.displayName}</p>
-    </>
-  );
+  return homeContent();
 }
 
 function formatCameroonPhoneNumber(phoneNumber) {

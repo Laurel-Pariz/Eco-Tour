@@ -194,7 +194,7 @@ export default function BookingForm() {
         // id: user?.user.id,
         firstName: values.firstName,
         lastName: values.lastName,
-        email: values.lastName,
+        email: values.email,
         phone: values.phone,
         country: values.country,
         city: values.city,
