@@ -1,35 +1,60 @@
-import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
-import { store } from "../Configs/firebase";
+
+import { supabase } from "../Configs/supabase";
+
+// /admin/dashboard/home
+
+export const ToursInforServices = async () => {
+  try {
+    const { data, error } = await supabase.from("tours").select("*");
+
+    if (error) throw error;
+
+    const tours = [];
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        tours.push({
+          id: data[key].id,
+          tour: data[key].tour,
+          price_1: data[key].price_1,
+          price_2: data[key].price_2,
+        });
+      }
+    }
+    return tours;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 
 export const BookedToursServices = async (userId) => {
   try {
-    const db = store;
-    const toursRef = collection(db, `${userId}/booking/tours`);
-    const q = query(toursRef);
-    const querySnapshot = await getDocs(q);
+    const { data, error } = await supabase
+      .from("booked_tours")
+      .select("*")
+      .eq("userId", userId);
 
-    const bookedTours = [];
-    querySnapshot.forEach((doc) => {
-      bookedTours.push({
-        id: doc.id,
-        firstName: doc.data().firstName,
-        lastName: doc.data().lastName,
-        email: doc.data().email,
-        phone: doc.data().phone,
-        country: doc.data().country,
-        city: doc.data().city,
-        arrivalDate: doc.data().arrivalDate,
-        message: doc.data().message,
-        selectTour: doc.data().selectTour,
-        travelMode: doc.data().travelMode,
-        numberOfParticipants: doc.data().numberOfParticipants,
-        airportArrival: doc.data().airportArrival,
-        arrivalTime: doc.data().arrivalTime,
-        timeOfTourPlaced: doc.data().timeOfTourPlaced,
-        dayOfTourPlaced: doc.data().dayOfTourPlaced,
-      });
-    });
-    console.log("tours-service: ", bookedTours);
+    if (error) throw error;
+
+    const bookedTours = data.map((tour) => ({
+      tour_id: tour.tour_id,
+      firstName: tour.firstName,
+      lastName: tour.lastName,
+      email: tour.email,
+      phone: tour.phone,
+      country: tour.country,
+      city: tour.city,
+      dateOfArrival: tour.dateOfArrival,
+      message: tour.message,
+      selectTour: tour.selectTour,
+      travelMode: tour.travelMode,
+      numberOfParticipants: tour.numberOfParticipants,
+      airportOfArrival: tour.airportOfArrival,
+      timeOfArrival: tour.timeOfArrival,
+      created_at: tour.created_at,
+      price: tour.price,
+    }));
+
     return bookedTours;
   } catch (err) {
     return Promise.reject(err instanceof Error ? err : new Error(err));
@@ -38,33 +63,37 @@ export const BookedToursServices = async (userId) => {
 
 export const BookedTourService = async (userId, tourId) => {
   try {
-    const tourRef = doc(store, `${userId}/booking/tours/${tourId}`);
-    const tourSnapshot = await getDoc(tourRef);
+    const { data, error } = await supabase
+      .from("booked_tours")
+      .select("*")
+      .eq("userId", userId)
+      .eq("tour_id", tourId)
+      .single();
 
-    if (tourSnapshot.exists()) {
-      const bookedTour = {
-        id: tourId,
-        firstName: tourSnapshot.data().firstName,
-        lastName: tourSnapshot.data().lastName,
-        email: tourSnapshot.data().email,
-        phone: tourSnapshot.data().phone,
-        country: tourSnapshot.data().country,
-        city: tourSnapshot.data().city,
-        arrivalDate: tourSnapshot.data().arrivalDate,
-        message: tourSnapshot.data().message,
-        selectTour: tourSnapshot.data().selectTour,
-        travelMode: tourSnapshot.data().travelMode,
-        numberOfParticipants: tourSnapshot.data().numberOfParticipants,
-        airportArrival: tourSnapshot.data().airportArrival,
-        arrivalTime: tourSnapshot.data().arrivalTime,
-        timeOfTourPlaced: tourSnapshot.data().timeOfTourPlaced,
-        dayOfTourPlaced: tourSnapshot.data().dayOfTourPlaced,
-      };
-      return bookedTour;
-    } else {
-      return null || "Error loading tour details";
-    }
-  } catch (error) {
-    return Promise.reject(error instanceof Error ? error : new Error(error));
+    if (error) throw error;
+
+    const bookedTour = {
+      tour_id: data.tour_id,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      phone: data.phone,
+      country: data.country,
+      city: data.city,
+      dateOfArrival: data.dateOfArrival,
+      message: data.message,
+      selectTour: data.selectTour,
+      travelMode: data.travelMode,
+      numberOfParticipants: data.numberOfParticipants,
+      airportOfArrival: data.airportOfArrival,
+      timeOfArrival: data.timeOfArrival,
+      created_at: data.created_at,
+      price: data.price,
+    };
+
+    return bookedTour;
+  } catch (err) {
+    return Promise.reject(err instanceof Error ? err : new Error(err));
   }
 };
+

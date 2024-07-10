@@ -1,31 +1,55 @@
 import React, { useState } from "react";
 import { Form, Formik } from "formik";
 import { AppState } from "../../Store/context";
-import { redirect } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CustomInput from "../../Components/CustomerInput";
+import { supabase } from "../../Configs/supabase";
 
-const SignUpErrorMessage = () => {
+const SignUpErrorMessage = ({ error }) => {
   return (
     <>
-      <p>Something went wrong</p>
+      {alert(error.message)}
+      <p>{error.message}</p>
       <p>Please try again</p>
     </>
   );
 };
 
-const SignInErrorMessage = () => {
+const SignInErrorMessage = ({ error }) => {
   return (
     <>
+      {alert(error.message)}
       <p>Error signing into account</p>
       <p>Please try again</p>
     </>
   );
 };
 
+// Helper function to create user profile
+const createUserProfile = async (user, profile) => {
+  const { error } = await supabase
+    .from("userProfiles")
+    .insert([{ id: user?.user.id, ...profile }], { returning: "minimal" });
+  if (error) throw error;
+
+  // return data;
+};
+
+// Helper function to create admin profile
+const createAdminProfile = async (user, profile) => {
+  const { data, error } = await supabase
+    .from("adminProfiles")
+    .insert([{ id: user?.user.id, ...profile }], { returning: "minimal" });
+  if (error) throw error;
+  return data;
+};
+
 export default function AuthPage() {
   const { signInHandler, signUpHandler } = AppState();
   const [authState, setAuthState] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleAuthState = () => {
     setTimeout(() => {
@@ -34,39 +58,83 @@ export default function AuthPage() {
   };
 
   const handleUserSignUp = async (values, actions) => {
+    const role = location.pathname === "/admin/sign-in" ? "admin" : "user";
+    const redirectTo = role === "admin" ? "/admin/dashboard/home" : "/";
     try {
-      signUpHandler(
+      const { user } = await signUpHandler(
         values.email,
         values.password,
         values.firstName,
-        values.lastName
+        values.lastName,
+        role,
+        values.phone,
+        redirectTo
       );
+      const { id } = user;
+      console.log("auth page userId: ", id);
+      console.log("auth page userId: ");
       alert("Success!!");
+
       actions.resetForm({
         values: {
           firstName: "",
           lastName: "",
           email: "",
           password: "",
+          phone: "",
         },
       });
+      navigate(redirectTo);
+
+      try {
+        const userData = {
+          id,
+          name: `${values.firstName} ${values.lastName}`,
+          user,
+        };
+
+        if (role === "admin") {
+          const { error } = await supabase
+            .from("adminProfiles")
+            .insert(userData);
+          if (error) throw error;
+          alert("success to admin database");
+        } else {
+          const { error } = await supabase
+            .from("userProfiles")
+            .insert(userData);
+          if (error) {
+            alert(error.message);
+            console.error(error.message);
+            throw error;
+          }
+          alert("success to user database");
+        }
+      } catch (error) {
+        alert(error.message);
+        console.error(error.message);
+      }
     } catch (error) {
-      throw new Error(<SignUpErrorMessage />);
+      alert(error);
+      throw new Error(<SignUpErrorMessage error={error} />);
     }
   };
 
   const handleLogInUser = async (values, actions) => {
+    const role = location.pathname === "/admin/sign-in" ? "admin" : "user";
+    const redirectTo = role === "admin" ? "/admin/dashboard/home" : "/";
     try {
       await signInHandler(values.email, values.password);
-      redirect("/home");
       actions.resetForm({
         values: {
           email: "",
           password: "",
         },
       });
+      navigate(redirectTo);
     } catch (error) {
-      throw new Error(<SignInErrorMessage />);
+      alert(error);
+      throw new Error(<SignInErrorMessage error={error} />);
     }
   };
 
@@ -89,6 +157,7 @@ export default function AuthPage() {
             password: "",
             firstName: "",
             lastName: "",
+            phone: "",
           }}
           onSubmit={authState ? handleUserSignUp : handleLogInUser}
         >
@@ -133,6 +202,18 @@ export default function AuthPage() {
                         value={values.lastName}
                         placeholder="Enter Last Name"
                         label="Last Name"
+                      />
+                    )}
+                    {authState && (
+                      <CustomInput
+                        onChange={handleChange}
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        onBlur={handleBlur}
+                        value={values.phone}
+                        placeholder="Enter phone number"
+                        label="Phone Number"
                       />
                     )}
                     <CustomInput

@@ -1,44 +1,125 @@
 import React, { useState } from "react";
 import { Form, Formik } from "formik";
 import CustomInput from "../../../Components/CustomerInput";
-import {
-  airportInfor,
-  tourInfo,
-  travelModeInfo,
-} from "../../../Components/Data/data";
+import { airportInfor, travelModeInfo } from "../../../Components/Data/data";
 import { Link } from "react-router-dom";
 import { store } from "../../../Configs/firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { AppState } from "../../../Store/context";
+import { ToursInforServices } from "../../../Services/service";
+import { useQuery } from "react-query";
+import { supabase } from "../../../Configs/supabase";
+
+function formatCameroonPhoneNumber(phoneNumber) {
+  const digits = phoneNumber.toString().replace(/\D/g, "");
+  if (digits.startsWith("237")) {
+    return `+237 ${digits.slice(3, 6)} ${digits.slice(6, 9)} ${digits.slice(
+      9,
+      12
+    )}`;
+  }
+  return `+237 ${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(
+    6,
+    9
+  )}`;
+}
+
+const DISCOUNTS = {
+  COUPLE: 0.15,
+  SINGLE: 0.3,
+};
+
+function calculateGroupDiscount(groupSize) {
+  if (groupSize < 3) {
+    throw new Error("Group size must be 3 or more to receive a discount.");
+  }
+  const baseDiscount = 0.1;
+  const additionalDiscountPerPerson = 0.02;
+  let totalDiscount =
+    baseDiscount + (groupSize - 3) * additionalDiscountPerPerson;
+  const maxDiscount = 0.5;
+  if (totalDiscount > maxDiscount) {
+    totalDiscount = maxDiscount;
+  }
+  return totalDiscount;
+}
+
+function formatMoney(amount, currency) {
+  let formatter;
+
+  switch (currency) {
+    case "USD":
+      formatter = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      });
+      break;
+    case "XOF":
+      formatter = new Intl.NumberFormat("fr-FR", {
+        style: "currency",
+        currency: "XOF",
+      });
+      break;
+    default:
+      throw new Error("Unsupported currency");
+  }
+
+  return formatter.format(amount);
+}
+
+function convertUSDtoXOF(amountInUSD) {
+  const exchangeRate = 605; // Example exchange rate, 1 USD = 605 XOF
+
+  return amountInUSD * exchangeRate;
+}
 
 export default function BookingForm() {
   const { user } = AppState();
+  const [showModal, setShowModal] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
-  const userId = user?.uid;
-  console.log("userId: ", userId);
+  const userId = user?.user.id;
 
-  console.log("Complete value: ", isCompleted.toString());
-  console.log("Complete value 2: ", !!isCompleted.toString());
+  console.log("userId", userId)
 
-  function formatCameroonPhoneNumber(phoneNumber) {
-    // Remove all non-digit characters
-    const digits = phoneNumber.toString().replace(/\D/g, "");
+  const discountCalculatorHandler = (values, selectedTour) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(calculateDiscount(values, selectedTour));
+      }, 500);
+    });
+  };
 
-    // Check if the phone number already starts with 237
-    if (digits.startsWith("237")) {
-      // Ensure it starts with +237
-      return `+237 ${digits.slice(3, 6)} ${digits.slice(6, 9)} ${digits.slice(
-        9,
-        12
-      )}`;
+  const calculateDiscount = (values, selectedTour) => {
+    let discount = 0;
+    let price = selectedTour.price_2;
+    if (values.numberOfParticipants >= 3) {
+      price = selectedTour.price_1;
     }
 
-    // If it doesn't start with 237, add it
-    return `+237 ${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(
-      6,
-      9
-    )}`;
-  }
+    if (values.travelMode === "Alone") {
+      discount = DISCOUNTS.SINGLE;
+    } else if (values.travelMode === "Couple") {
+      discount = DISCOUNTS.COUPLE;
+    } else if (
+      values.travelMode === "Family" ||
+      values.travelMode === "Group"
+    ) {
+      discount = calculateGroupDiscount(values.numberOfParticipants);
+    }
+
+    return price - price * discount;
+  };
+
+  const {
+    data = [],
+    isLoading,
+    error,
+  } = useQuery("tours", () => ToursInforServices());
+
+  const handleModalAction = () => {
+    setShowModal(false);
+    setIsCompleted((prevState) => !prevState);
+  };
 
   const handleEmailEvent = (e) => {
     e.preventDefault();
@@ -50,58 +131,97 @@ export default function BookingForm() {
 
   const phoneNumber = "+237670112460";
 
+  const tourPriceValue = async (values, data) => {
+    const selectedTour = data.find((tour) => tour.tour === values.selectTour);
+    if (!selectedTour) {
+      alert("Selected tour not found.");
+      return 0;
+    }
+
+    // Calculate tour price based on the selected tour and values
+    let tourPrice = 0;
+    try {
+      tourPrice = await discountCalculatorHandler(values, selectedTour);
+    } catch (error) {
+      console.error("Error calculating tour price:", error);
+      alert("Error calculating tour price. Please try again.");
+      return 0;
+    }
+
+    return tourPrice;
+  };
+
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    country: "",
+    city: "",
+    arrivalDate: "",
+    arrivalTime: "",
+    message: "",
+    selectTour: "",
+    airportArrival: "",
+    travelMode: "",
+    numberOfParticipants: "",
+    tourPrice: 0,
+  };
+
   const handleTourSubmitForm = async (values, actions) => {
     if (!user) {
       alert("You must be authenticated to submit the form.");
       return;
     }
 
+    const price = await tourPriceValue(values, data);
+
+    alert(
+      `You will be charged up on arrival for the tour a sum of ${formatMoney(
+        price,
+        "USD"
+      )} (${formatMoney(convertUSDtoXOF(price), "XOF")})`
+    );
+
+    console.log("price: ", price);
+    alert ("arrival date", values.dateOfArrival)
+
     const timeOfTourPlaced = new Date().toTimeString().split(" ")[0];
     const dayOfTourPlaced = new Date().toDateString();
-    const db = store;
-    const tourRef = collection(db, userId, "booking", "tours");
-    try {
-      await addDoc(tourRef, {
+
+    const { error } = await supabase.from("booked_tours").insert([
+      {
+        // id: user?.user.id,
         firstName: values.firstName,
         lastName: values.lastName,
         email: values.email,
         phone: values.phone,
         country: values.country,
         city: values.city,
-        arrivalDate: values.arrivalDate,
-        arrivalTime: values.arrivalTime,
-        message: values.message,
         selectTour: values.selectTour,
+        dateOfArrival: values.arrivalDate,
+        timeOfArrival: values.arrivalTime,
+        airportOfArrival: values.airportArrival,
         travelMode: values.travelMode,
-        numberOfParticipants: values.numberOfParticipants,
-        airportArrival: values.airportArrival,
-        timeOfTourPlaced: timeOfTourPlaced,
-        dayOfTourPlaced: dayOfTourPlaced,
-      });
-      setIsCompleted(true);
-      if (!isCompleted) {
-        actions.resetForm({
-          values: {
-            firstName: "",
-            lastName: "",
-            email: "",
-            phone: "",
-            country: "",
-            city: "",
-            arrivalDate: "",
-            arrivalTime: "",
-            message: "",
-            selectTour: "",
-            airportArrival: "",
-            travelMode: "",
-            numberOfParticipants: "",
-          },
-        });
-      }
-      alert("Submit success");
-    } catch (error) {
-      alert(`Error submitting form: ${error.message}`);
+        numberOfParticipants:
+          values.travelMode === "Alone"
+            ? 1
+            : values.travelMode === "Couple"
+            ? 2
+            : values.numberOfParticipants,
+        message: values.message,
+        price: price,
+        created_at: `${dayOfTourPlaced} ${timeOfTourPlaced}`,
+      },
+    ]);
+
+    if (error) {
+      console.error(error.message);
+      alert(error.message);
+      throw error;
     }
+
+    alert("write to booked_tours table success");
   };
 
   return (
@@ -131,13 +251,13 @@ export default function BookingForm() {
           <p className="text-xl my-2">
             website:
             <span className="ml-4 text-red-500">
-              <a
-                href="https://eco-tourism-booking-platform.web.app"
+              <Link
+                to="https://eco-tourism-booking-platform.web.app"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 https://eco-tourism-booking-platform.web.app
-              </a>
+              </Link>
             </span>
           </p>
 
@@ -149,24 +269,7 @@ export default function BookingForm() {
       </div>
 
       <div className="mt-10">
-        <Formik
-          initialValues={{
-            firstName: "",
-            lastName: "",
-            email: "",
-            phone: "",
-            country: "",
-            city: "",
-            arrivalDate: "",
-            arrivalTime: "",
-            message: "",
-            selectTour: "",
-            airportArrival: "",
-            travelMode: "",
-            numberOfParticipants: "",
-          }}
-          onSubmit={handleTourSubmitForm}
-        >
+        <Formik initialValues={initialValues} onSubmit={handleTourSubmitForm}>
           {({ values, handleChange, handleBlur, isSubmitting }) => (
             <Form>
               <div className="space-y-4">
@@ -248,11 +351,29 @@ export default function BookingForm() {
                     <option className="text-lg" value="">
                       --Select Tour--
                     </option>
-                    {tourInfo.map((tour, index) => (
-                      <option className="text-lg" key={index} value={tour}>
-                        {tour}
+                    {isLoading ? (
+                      <option className="text-lg" value="">
+                        Loading....
                       </option>
-                    ))}
+                    ) : error ? (
+                      <option className="text-lg" value="">
+                        {error.message}
+                      </option>
+                    ) : data.length === 0 ? (
+                      <option className="text-lg" value="">
+                        No tours available
+                      </option>
+                    ) : (
+                      data?.map((tours) => (
+                        <option
+                          className="text-lg"
+                          key={tours.id}
+                          value={tours.tour}
+                        >
+                          {tours.tour}
+                        </option>
+                      ))
+                    )}
                   </CustomInput>
                   <CustomInput
                     onChange={handleChange}
@@ -327,6 +448,7 @@ export default function BookingForm() {
                       label="Number of participants"
                     />
                   )}
+
                   <CustomInput
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -343,11 +465,11 @@ export default function BookingForm() {
                 </div>
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <button
-                    className="uppercase text-xl font-medium rounded-md my-4 p-4 tracking-wildest text-white mx-4 bg-gray-800"
+                    className="uppercase text-xl font-medium rounded-md my-4 p-4 tracking-widest text-white mx-4 bg-gray-800"
                     disabled={isSubmitting ? "text-gray-300" : ""}
                     type="submit"
                   >
-                    send
+                    Send
                   </button>
                 </div>
               </div>
