@@ -2,7 +2,7 @@ import CardComponent from "../../Components/Card";
 import { AppState } from "../../Store/context";
 import { discoverCameroon } from "../../Components/Data/data";
 import { Link, useLocation } from "react-router-dom";
-import { ModalHeader, Sidebar } from "flowbite-react";
+import { Sidebar } from "flowbite-react";
 import { UserIcon } from "@heroicons/react/24/outline";
 import { MdOutlineTour } from "react-icons/md";
 import { FaRegBookmark, FaArrowRight } from "react-icons/fa";
