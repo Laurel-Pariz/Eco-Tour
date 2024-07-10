@@ -22,3 +22,38 @@ export const fetchUserProfiles = async () => {
 
   return ecoTourUsers;
 };
+
+export const EcoToursBookedTours = async (userId) => {
+  try {
+    const { data, error } = await supabase
+      .from("booked_tours")
+      .select("*")
+      .eq("userId", userId);
+
+    if (error) throw error;
+
+    const bookedTours = data.map((tour) => ({
+      tour_id: tour.tour_id,
+      firstName: tour.firstName,
+      lastName: tour.lastName,
+      email: tour.email,
+      phone: tour.phone,
+      country: tour.country,
+      city: tour.city,
+      dateOfArrival: tour.dateOfArrival,
+      message: tour.message,
+      selectTour: tour.selectTour,
+      travelMode: tour.travelMode,
+      numberOfParticipants: tour.numberOfParticipants,
+      airportOfArrival: tour.airportOfArrival,
+      timeOfArrival: tour.timeOfArrival,
+      created_at: tour.created_at,
+      price: tour.price,
+    }));
+
+    return bookedTours;
+  } catch (error) {
+    console.error(error.message);
+    throw error;
+  }
+};
