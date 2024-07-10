@@ -2,34 +2,202 @@ import CardComponent from "../../Components/Card";
 import { AppState } from "../../Store/context";
 import { discoverCameroon } from "../../Components/Data/data";
 import { Link, useLocation } from "react-router-dom";
-
-import { Sidebar } from "flowbite-react";
+import { ModalHeader, Sidebar } from "flowbite-react";
 import { UserIcon } from "@heroicons/react/24/outline";
 import { MdOutlineTour } from "react-icons/md";
 import { FaRegBookmark, FaArrowRight } from "react-icons/fa";
 import { useQuery } from "react-query";
 import { fetchUserProfiles } from "../../Services/adminServices";
+import { ToursInforServices } from "../../Services/service";
+import { useState } from "react";
+import { supabase } from "../../Configs/supabase";
+import { Modal } from "flowbite-react";
+import { Formik, Form } from "formik";
+import CustomInput from "../../Components/CustomerInput";
+
+function formatMoney(amount, currency) {
+  let formatter;
+
+  switch (currency) {
+    case "USD":
+      formatter = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      });
+      break;
+    case "XOF":
+      formatter = new Intl.NumberFormat("fr-FR", {
+        style: "currency",
+        currency: "XOF",
+      });
+      break;
+    default:
+      throw new Error("Unsupported currency");
+  }
+
+  return formatter.format(amount);
+}
+
+function convertUSDtoXOF(amountInUSD) {
+  const exchangeRate = 605;
+  return amountInUSD * exchangeRate;
+}
 
 export default function Home() {
   const { user } = AppState();
   const location = useLocation();
-  console.log("userInformation: ", user);
-  console.log("userId: ", user?.user.id);
-  console.log("user-role: ", user?.user.role);
+
+  const [isAdding, setIsAdding] = useState(false);
+
+  const handleAddTour = () => setIsAdding(true);
+  const handleCloseModal = () => setIsAdding(false);
+
+  const addTourHandler = async (values, actions) => {
+    try {
+      const { error } = await supabase
+        .from("tours")
+        .insert([
+          {
+            tour: values.tour,
+            price_1: values.price_1,
+            price_2: values.price_2,
+          },
+        ])
+        .select("*");
+
+      if (error) throw error;
+
+      alert("new tour add success");
+
+      actions.resetForm();
+      setIsAdding(false);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
 
   const {
     data: userProfiles = [],
     isLoading,
     error,
-  } = useQuery("userProfiles", () => fetchUserProfiles());
+  } = useQuery("userProfiles", fetchUserProfiles);
   console.log("userProfiles: ", userProfiles);
+
+  const {
+    data: toursData = [],
+    isLoading: toursLoading,
+    error: toursError,
+  } = useQuery("tours", ToursInforServices);
+
+  const renderToursInformation = () => {
+    if (toursLoading) {
+      return <p>Loading tours...</p>;
+    } else if (toursError) {
+      return <p>{toursError.message}</p>;
+    } else if (toursData.length === 0) {
+      return <p>No tours available, please add tours</p>;
+    } else {
+      return (
+        <div className="flex bg-gray-100 p-4 m-4">
+          <table className="table-auto w-full bg-white rounded shadow">
+            <thead>
+              <tr>
+                <th className="px-4 py-2">Tours</th>
+                <th className="px-4 py-2">Price per 2 persons</th>
+                <th className="px-4 py-2">Price per 3 persons</th>
+              </tr>
+            </thead>
+            <tbody>
+              {toursData.map((toursInfor) => (
+                <tr key={toursInfor.id}>
+                  <td className="border px-4 py-2">{toursInfor.tour}</td>
+                  <td className="border px-4 py-2">
+                    {formatMoney(toursInfor.price_2, "USD")} /{" "}
+                    {formatMoney(convertUSDtoXOF(toursInfor.price_2), "XOF")}
+                  </td>
+                  <td className="border px-4 py-2">
+                    {formatMoney(toursInfor.price_1, "USD")} /{" "}
+                    {formatMoney(convertUSDtoXOF(toursInfor.price_1), "XOF")}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <Modal
+            className="flex justify-center"
+            show={isAdding}
+            onClose={handleCloseModal}
+          >
+            <Modal.Header>
+              <div className="flex justify-center text-center text-gray-800">
+                Add new tour
+              </div>
+            </Modal.Header>
+            <Modal.Body className="grid justify-center">
+              <Formik
+                initialValues={{ tour: "", price_1: "", price_2: "" }}
+                onSubmit={addTourHandler}
+              >
+                {({ values, isSubmitting, handleChange, handleBlur }) => (
+                  <Form>
+                    <CustomInput
+                      name="tour"
+                      id="tour"
+                      type="text"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.tour}
+                      placeholder="Add touristic destination"
+                      label="Touristic destination"
+                    />
+                    <CustomInput
+                      name="price_1"
+                      id="price_1"
+                      type="number"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.price_1}
+                      placeholder="Price per 3 persons (in USD)"
+                      label="Price per 3 persons (in USD)"
+                    />
+                    <CustomInput
+                      name="price_2"
+                      id="price_2"
+                      type="number"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.price_2}
+                      placeholder="Price per 2 persons (in USD)"
+                      label="Price per 2 persons (in USD)"
+                    />
+
+                    <button
+                      type="submit"
+                      className="
+                      flex justify-center text-center
+                       bg-gray-800 text-white rounded-md
+                       font-medium px-2 py-2 mx-4 my-4"
+                    >
+                      Add tour
+                    </button>
+                  </Form>
+                )}
+              </Formik>
+            </Modal.Body>
+          </Modal>
+        </div>
+      );
+    }
+  };
 
   const renderUserProfiles = () => {
     if (isLoading) {
-      return <p>Loading</p>;
+      return <p>Loading...</p>;
     } else if (error) {
       return <p>{error.message}</p>;
-    } else if (userProfiles.length === 0 || null) {
+    } else if (userProfiles.length === 0) {
       return <p>No users in system</p>;
     } else {
       return (
@@ -43,24 +211,15 @@ export default function Home() {
               </tr>
             </thead>
             <tbody>
-              {userProfiles?.map((userInfo) => {
+              {userProfiles.map((userInfo) => {
                 const {
                   id,
                   name,
                   user: {
-                    created_at,
-                    user_metadata: { email, phone, firstName, lastName },
+                    user_metadata: { email, phone },
                   },
                 } = userInfo;
 
-                console.log(
-                  "user in data: ",
-                  created_at,
-                  email,
-                  firstName,
-                  lastName,
-                  phone
-                );
                 return (
                   <tr key={id}>
                     <td className="border px-4 py-2">{name}</td>
@@ -119,6 +278,16 @@ export default function Home() {
             <p className="text-gray-800">Admin dashboard</p>
             <h1>User Profiles</h1>
             {renderUserProfiles()}
+            <h1>Tours</h1>
+            {renderToursInformation()}
+            {!isAdding && (
+              <button
+                onClick={handleAddTour}
+                className="bg-gray-800 text-white p-2 mt-2 font-medium rounded-md"
+              >
+                Add Tour
+              </button>
+            )}
           </div>
         </div>
       );

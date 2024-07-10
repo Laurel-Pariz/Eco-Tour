@@ -3,13 +3,15 @@ import { Form, Formik } from "formik";
 import CustomInput from "../../../Components/CustomerInput";
 import {
   airportInfor,
-  tourInfo,
+  toursInfor,
   travelModeInfo,
 } from "../../../Components/Data/data";
 import { Link } from "react-router-dom";
 import { store } from "../../../Configs/firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { AppState } from "../../../Store/context";
+import { ToursInforServices } from "../../../Services/service";
+import { useQuery } from "react-query";
 
 export default function BookingForm() {
   const { user } = AppState();
@@ -20,6 +22,12 @@ export default function BookingForm() {
 
   console.log("Complete value: ", isCompleted.toString());
   console.log("Complete value 2: ", !!isCompleted.toString());
+
+  const {
+    data = [],
+    isLoading,
+    error,
+  } = useQuery("tours", () => ToursInforServices());
 
   const handleModalAction = () => {
     setShowModal(false);
@@ -137,13 +145,13 @@ export default function BookingForm() {
           <p className="text-xl my-2">
             website:
             <span className="ml-4 text-red-500">
-              <a
-                href="https://eco-tourism-booking-platform.web.app"
+              <Link
+                to="https://eco-tourism-booking-platform.web.app"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 https://eco-tourism-booking-platform.web.app
-              </a>
+              </Link>
             </span>
           </p>
 
@@ -254,11 +262,30 @@ export default function BookingForm() {
                     <option className="text-lg" value="">
                       --Select Tour--
                     </option>
-                    {tourInfo.map((tour, index) => (
-                      <option className="text-lg" key={index} value={tour}>
-                        {tour}
+
+                    {isLoading ? (
+                      <option className="text-lg" value="">
+                        Loading....
                       </option>
-                    ))}
+                    ) : error ? (
+                      <option className="text-lg" value="">
+                        {error.message}
+                      </option>
+                    ) : data.length === 0 ? (
+                      <option className="text-lg" value="">
+                        No tours available
+                      </option>
+                    ) : (
+                      data?.map((tours, index) => (
+                        <option
+                          className="text-lg"
+                          key={index}
+                          value={tours.tour}
+                        >
+                          {tours.tour}
+                        </option>
+                      ))
+                    )}
                   </CustomInput>
                   <CustomInput
                     onChange={handleChange}

@@ -7,6 +7,34 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { store } from "../Configs/firebase";
+import { toursInfor } from "../Components/Data/data";
+import { supabase } from "../Configs/supabase";
+
+// /admin/dashboard/home
+
+export const ToursInforServices = async () => {
+  try {
+    const { data, error } = await supabase.from("tours").select("*");
+
+    if (error) throw error;
+
+    const tours = [];
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        tours.push({
+          id: data[key].id,
+          tour: data[key].tour,
+          price_1: data[key].price_1,
+          price_2: data[key].price_2,
+        });
+      }
+    }
+    return tours;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 
 export const BookedToursServices = async (userId) => {
   try {
